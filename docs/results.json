@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-12T11:16:15.348103+00:00",
+  "last_updated": "2026-09-12T11:19:42.840888+00:00",
   "equity_now": 88052.29,
   "cash_now": -17718.88,
   "start_equity": 100000.0,
@@ -934,6 +934,23 @@
       "value": 3864.58,
       "unreal_pl": -340.93,
       "unreal_pl_pc": -8.11
+    }
+  ],
+  "sector_breakdown": [
+    {
+      "sector": "Information Technology",
+      "value": 86830.45,
+      "pct": 82.09
+    },
+    {
+      "sector": "Energy",
+      "value": 10147.26,
+      "pct": 9.59
+    },
+    {
+      "sector": "Health Care",
+      "value": 8793.47,
+      "pct": 8.31
     }
   ],
   "trades": [
