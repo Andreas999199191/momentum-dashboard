@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-12T15:03:00.468674+00:00",
+  "last_updated": "2026-09-12T15:14:20.942934+00:00",
   "equity_now": 88052.29,
   "cash_now": -17718.88,
   "start_equity": 100000.0,
@@ -1080,6 +1080,165 @@
       "days_until": 82
     }
   ],
+  "momentum_ranks": [
+    {
+      "ticker": "DELL",
+      "rank": 1,
+      "total_qualifying": 298,
+      "momentum_pct": 275.93,
+      "above_sma": true
+    },
+    {
+      "ticker": "HPE",
+      "rank": 2,
+      "total_qualifying": 298,
+      "momentum_pct": 190.42,
+      "above_sma": true
+    },
+    {
+      "ticker": "MRNA",
+      "rank": 3,
+      "total_qualifying": 298,
+      "momentum_pct": 173.92,
+      "above_sma": true
+    },
+    {
+      "ticker": "MRVL",
+      "rank": 4,
+      "total_qualifying": 298,
+      "momentum_pct": 168.92,
+      "above_sma": true
+    },
+    {
+      "ticker": "AMD",
+      "rank": 5,
+      "total_qualifying": 298,
+      "momentum_pct": 166.89,
+      "above_sma": true
+    },
+    {
+      "ticker": "HUM",
+      "rank": 6,
+      "total_qualifying": 298,
+      "momentum_pct": 149.56,
+      "above_sma": true
+    },
+    {
+      "ticker": "SNDK",
+      "rank": 7,
+      "total_qualifying": 298,
+      "momentum_pct": 146.87,
+      "above_sma": true
+    },
+    {
+      "ticker": "MU",
+      "rank": 8,
+      "total_qualifying": 298,
+      "momentum_pct": 129.0,
+      "above_sma": true
+    },
+    {
+      "ticker": "INTC",
+      "rank": 9,
+      "total_qualifying": 298,
+      "momentum_pct": 124.91,
+      "above_sma": true
+    },
+    {
+      "ticker": "STX",
+      "rank": 10,
+      "total_qualifying": 298,
+      "momentum_pct": 116.89,
+      "above_sma": true
+    },
+    {
+      "ticker": "NTAP",
+      "rank": 11,
+      "total_qualifying": 298,
+      "momentum_pct": 103.64,
+      "above_sma": true
+    },
+    {
+      "ticker": "PANW",
+      "rank": 12,
+      "total_qualifying": 298,
+      "momentum_pct": 97.97,
+      "above_sma": true
+    },
+    {
+      "ticker": "HPQ",
+      "rank": 14,
+      "total_qualifying": 298,
+      "momentum_pct": 91.55,
+      "above_sma": true
+    },
+    {
+      "ticker": "CRWD",
+      "rank": 15,
+      "total_qualifying": 298,
+      "momentum_pct": 87.19,
+      "above_sma": true
+    },
+    {
+      "ticker": "FTNT",
+      "rank": 16,
+      "total_qualifying": 298,
+      "momentum_pct": 87.04,
+      "above_sma": true
+    },
+    {
+      "ticker": "FLEX",
+      "rank": 17,
+      "total_qualifying": 298,
+      "momentum_pct": 82.47,
+      "above_sma": true
+    },
+    {
+      "ticker": "MPC",
+      "rank": 20,
+      "total_qualifying": 298,
+      "momentum_pct": 76.2,
+      "above_sma": true
+    },
+    {
+      "ticker": "ZBRA",
+      "rank": 21,
+      "total_qualifying": 298,
+      "momentum_pct": 72.83,
+      "above_sma": true
+    },
+    {
+      "ticker": "VLO",
+      "rank": 22,
+      "total_qualifying": 298,
+      "momentum_pct": 70.78,
+      "above_sma": true
+    },
+    {
+      "ticker": "WDC",
+      "rank": 23,
+      "total_qualifying": 298,
+      "momentum_pct": 64.32,
+      "above_sma": true
+    }
+  ],
+  "regime": {
+    "risk_on": true,
+    "spy_price": 764.29,
+    "spy_sma200": 712.06,
+    "pct_from_sma": 7.34
+  },
+  "last_rebalance": {
+    "date": "2026-09-08",
+    "sold": [
+      "CRL",
+      "DDOG"
+    ],
+    "bought": [
+      "HPQ",
+      "ZBRA"
+    ]
+  },
   "trades": [
     {
       "ticker": "MRNA",
