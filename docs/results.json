@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-12T11:23:04.409821+00:00",
+  "last_updated": "2026-09-12T15:03:00.468674+00:00",
   "equity_now": 88052.29,
   "cash_now": -17718.88,
   "start_equity": 100000.0,
@@ -976,6 +976,108 @@
       "sector": "Electronic Manufacturing Services",
       "value": 4162.59,
       "pct": 3.94
+    }
+  ],
+  "earnings_calendar": [
+    {
+      "ticker": "MU",
+      "date": "2026-09-30",
+      "days_until": 18
+    },
+    {
+      "ticker": "VLO",
+      "date": "2026-10-22",
+      "days_until": 40
+    },
+    {
+      "ticker": "INTC",
+      "date": "2026-10-22",
+      "days_until": 40
+    },
+    {
+      "ticker": "STX",
+      "date": "2026-10-27",
+      "days_until": 45
+    },
+    {
+      "ticker": "FLEX",
+      "date": "2026-10-28",
+      "days_until": 46
+    },
+    {
+      "ticker": "ZBRA",
+      "date": "2026-11-03",
+      "days_until": 52
+    },
+    {
+      "ticker": "AMD",
+      "date": "2026-11-03",
+      "days_until": 52
+    },
+    {
+      "ticker": "MPC",
+      "date": "2026-11-03",
+      "days_until": 52
+    },
+    {
+      "ticker": "FTNT",
+      "date": "2026-11-04",
+      "days_until": 53
+    },
+    {
+      "ticker": "WDC",
+      "date": "2026-11-05",
+      "days_until": 54
+    },
+    {
+      "ticker": "MRNA",
+      "date": "2026-11-05",
+      "days_until": 54
+    },
+    {
+      "ticker": "HUM",
+      "date": "2026-11-06",
+      "days_until": 55
+    },
+    {
+      "ticker": "SNDK",
+      "date": "2026-11-06",
+      "days_until": 55
+    },
+    {
+      "ticker": "PANW",
+      "date": "2026-11-19",
+      "days_until": 68
+    },
+    {
+      "ticker": "HPQ",
+      "date": "2026-11-24",
+      "days_until": 73
+    },
+    {
+      "ticker": "DELL",
+      "date": "2026-11-27",
+      "days_until": 76
+    },
+    {
+      "ticker": "NTAP",
+      "date": "2026-12-01",
+      "days_until": 80
+    },
+    {
+      "ticker": "CRWD",
+      "date": "2026-12-01",
+      "days_until": 80
+    },
+    {
+      "ticker": "MRVL",
+      "date": "2026-12-01",
+      "days_until": 80
+    },
+    {
+      "ticker": "HPE",
+      "date": "2026-12-03",
+      "days_until": 82
     }
   ],
   "trades": [
