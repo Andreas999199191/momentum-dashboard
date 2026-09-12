@@ -135,6 +135,64 @@
 
   ::-webkit-scrollbar { height: 6px; width: 6px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+  .table-scroll { overflow-x: auto; }
+
+  /* ---- MOBILE ---- */
+  @media (max-width: 760px) {
+    body { display: block; }
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      flex-direction: row;
+      align-items: center;
+      padding: 12px 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { padding: 0 12px 0 0; flex-shrink: 0; }
+    .nav-section { display: none; }
+    .nav-item { display: none; }
+    .sidebar-footer { display: none; }
+
+    .main { padding: 16px 14px 40px; }
+    .topbar { margin-bottom: 18px; }
+    .topbar h1 { font-size: 17px; }
+    .live-pill { font-size: 11px; padding: 5px 10px; }
+
+    .stat-row { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .stat-card { padding: 12px 14px; }
+    .stat-card .val { font-size: 18px; }
+
+    .panel { padding: 16px; }
+    .panel h2 { font-size: 13px; }
+
+    .top-grid { grid-template-columns: 1fr; gap: 12px; }
+    .gauge-svg { max-width: 170px; }
+    .gauge-value { font-size: 24px; }
+    .chart-wrap.tall { height: 220px; }
+    .chart-wrap { height: 180px; }
+
+    table { table-layout: auto; }
+    .table-scroll table { min-width: 460px; }
+    th, td { padding: 8px 6px; font-size: 11.5px; white-space: normal; }
+    .bar-row .bl { width: 44px; font-size: 11px; }
+    .bar-row .bl[style*="150px"] { width: 90px !important; }
+
+    .heatmap-grid { grid-template-columns: 30px repeat(12, 1fr); font-size: 9px; gap: 2px; }
+    .heatmap-grid .hcell { min-height: 20px; padding: 3px 1px; }
+
+    .cal-cell { width: 10px; height: 10px; }
+    .cal-grid { grid-template-rows: repeat(5, 10px); }
+  }
+
+  @media (max-width: 420px) {
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .stat-card .val { font-size: 16px; }
+    th, td { font-size: 11px; }
+  }
 </style>
 </head>
 <body>
@@ -195,7 +253,7 @@
     <div class="panel">
       <h2>Top positions</h2>
       <p class="sub">Current holdings ranked by portfolio weight</p>
-      <div id="positions-table"></div>
+      <div id="positions-table" class="table-scroll"></div>
     </div>
     <div class="panel">
       <h2>Position weights</h2>
@@ -239,12 +297,12 @@
     <div class="panel">
       <h2>Top winners</h2>
       <p class="sub">Best closed trades so far</p>
-      <div id="winners"></div>
+      <div id="winners" class="table-scroll"></div>
     </div>
     <div class="panel">
       <h2>Worst trades</h2>
       <p class="sub">Weakest closed trades so far</p>
-      <div id="losers"></div>
+      <div id="losers" class="table-scroll"></div>
     </div>
   </div>
 
