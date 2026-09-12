@@ -108,18 +108,20 @@
   .cal-legend .cal-cell { width: 12px; height: 12px; }
 
   .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 13px; }
-  .bar-row .bl { width: 56px; font-size: 12.5px; font-weight: 700; flex-shrink: 0; }
+  .bar-row .bl { width: 56px; font-size: 12.5px; font-weight: 700; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 5px; }
+  .bar-fill { height: 100%; border-radius: 5px; transition: width 0.4s ease; }
   .bar-row .bv { width: 46px; text-align: right; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; flex-shrink: 0; }
 
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; }
-  td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.03); font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  th { text-align: left; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+  td { padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.03); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   tr:last-child td { border-bottom: none; }
   tbody tr:hover { background: rgba(255,255,255,0.015); }
-  td.num { text-align: right; }
+  th.num, td.num { text-align: right; }
   .ticker-cell { font-weight: 700; }
+  .mini-bar-track { width: 70px; height: 6px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; }
+  .mini-bar-fill { height: 100%; border-radius: 4px; }
 
   .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; margin-bottom: 16px; }
   @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
@@ -200,6 +202,12 @@
       <p class="sub">Share of total portfolio value</p>
       <div id="weight-bars"></div>
     </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px;">
+    <h2>Sector exposure</h2>
+    <p class="sub">Portfolio value grouped by GICS sector — watch for concentration</p>
+    <div id="sector-bars"></div>
   </div>
 
   <div class="panel" style="margin-bottom:16px;">
@@ -368,6 +376,21 @@ async function loadDashboard() {
   } else {
     document.getElementById('positions-table').innerHTML = '<div class="empty">No open positions</div>';
     document.getElementById('weight-bars').innerHTML = '<div class="empty">No open positions</div>';
+  }
+
+  if (data.sector_breakdown && data.sector_breakdown.length > 0) {
+    const maxPct = Math.max(...data.sector_breakdown.map(s => s.pct));
+    document.getElementById('sector-bars').innerHTML = data.sector_breakdown.map((s, i) => {
+      const color = WEIGHT_COLORS[i % WEIGHT_COLORS.length];
+      const flagged = s.pct >= 40;
+      return `<div class="bar-row">
+        <div class="bl" style="width:150px;${flagged ? 'color:'+RED : ''}">${s.sector}${flagged ? ' ⚠' : ''}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${(s.pct/maxPct)*100}%;background:${flagged ? RED : color}"></div></div>
+        <div class="bv">${s.pct.toFixed(1)}%</div>
+      </div>`;
+    }).join('');
+  } else {
+    document.getElementById('sector-bars').innerHTML = '<div class="empty">Sector data unavailable</div>';
   }
 
   if (data.daily_returns && data.daily_returns.length > 5) {
