@@ -157,6 +157,17 @@
   .rebalance-log { font-size: 13px; line-height: 2; }
   .rebalance-log .rb-date { color: var(--muted); margin-bottom: 8px; font-family: var(--mono); }
 
+  .positions-summary {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 12px 4px 16px; border-bottom: 1px solid var(--border); margin-bottom: 12px;
+  }
+  .positions-summary .ps-label {
+    font-size: 12px; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .positions-summary .ps-value { font-family: var(--mono); font-size: 17px; font-weight: 700; }
+  .positions-summary .ps-value .ps-pct { margin-left: 8px; }
+
   @media (max-width: 760px) {
     .app-body { display: block; }
     .sidebar {
@@ -200,6 +211,8 @@
     .kpi-table td { padding: 12px 4px; font-size: 14px; }
     .kpi-table td:last-child { font-size: 15px; }
     .ticker-item { font-size: 10.5px; padding: 0 12px; }
+
+    .positions-summary .ps-value { font-size: 15px; }
   }
 </style>
 </head>
@@ -318,6 +331,7 @@
       <div class="panel">
         <h2>Open positions</h2>
         <p class="sub">All current holdings</p>
+        <div id="positions-summary"></div>
         <div id="positions-table" class="table-scroll"></div>
       </div>
       <div class="panel">
@@ -460,6 +474,22 @@ function renderSectorBars(containerId, sectorBreakdown) {
   }).join('');
 }
 
+function renderPositionsSummary(containerId, positions) {
+  const el = document.getElementById(containerId);
+  if (!positions.length) { el.innerHTML = ''; return; }
+  const totalPL = positions.reduce((s, p) => s + p.unreal_pl, 0);
+  const totalCostBasis = positions.reduce((s, p) => s + (p.value - p.unreal_pl), 0);
+  const totalPLPct = totalCostBasis !== 0 ? (totalPL / totalCostBasis) * 100 : 0;
+  el.innerHTML = `
+    <div class="positions-summary">
+      <span class="ps-label">Total unrealized P/L</span>
+      <span class="ps-value">
+        <span class="${pclass(totalPL)}">${totalPL >= 0 ? '+' : '-'}$${Math.abs(totalPL).toLocaleString(undefined,{maximumFractionDigits:0})}</span>
+        <span class="ps-pct ${pclass(totalPLPct)}">(${fmtPct(totalPLPct, true)})</span>
+      </span>
+    </div>`;
+}
+
 function earningsBadge(daysUntil) {
   if (daysUntil <= 3) return `<span class="earn-badge earn-soon">${daysUntil}D</span>`;
   if (daysUntil <= 7) return `<span class="earn-badge earn-week">${daysUntil}D</span>`;
@@ -578,6 +608,8 @@ async function loadDashboard() {
   }
 
   const totalVal = data.positions.reduce((s,p) => s + p.value, 0) || 1;
+
+  renderPositionsSummary('positions-summary', data.positions);
   if (data.positions.length > 0) {
     document.getElementById('positions-table').innerHTML = `
       <table><thead><tr><th>Ticker</th><th class="num">Value</th><th class="num">P/L</th></tr></thead>
