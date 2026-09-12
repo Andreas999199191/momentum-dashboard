@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-12T11:19:42.840888+00:00",
+  "last_updated": "2026-09-12T11:23:04.409821+00:00",
   "equity_now": 88052.29,
   "cash_now": -17718.88,
   "start_equity": 100000.0,
@@ -938,19 +938,44 @@
   ],
   "sector_breakdown": [
     {
-      "sector": "Information Technology",
-      "value": 86830.45,
-      "pct": 82.09
+      "sector": "Technology Hardware, Storage & Peripherals",
+      "value": 43385.69,
+      "pct": 41.02
     },
     {
-      "sector": "Energy",
+      "sector": "Semiconductors",
+      "value": 18269.25,
+      "pct": 17.27
+    },
+    {
+      "sector": "Systems Software",
+      "value": 12669.94,
+      "pct": 11.98
+    },
+    {
+      "sector": "Oil & Gas Refining & Marketing",
       "value": 10147.26,
       "pct": 9.59
     },
     {
-      "sector": "Health Care",
-      "value": 8793.47,
-      "pct": 8.31
+      "sector": "Electronic Equipment & Instruments",
+      "value": 8342.98,
+      "pct": 7.89
+    },
+    {
+      "sector": "Managed Health Care",
+      "value": 4548.83,
+      "pct": 4.3
+    },
+    {
+      "sector": "Biotechnology",
+      "value": 4244.64,
+      "pct": 4.01
+    },
+    {
+      "sector": "Electronic Manufacturing Services",
+      "value": 4162.59,
+      "pct": 3.94
     }
   ],
   "trades": [
