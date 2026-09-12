@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momentum bot — dashboard</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --green: #3fb950;
+    --red: #f85149;
+    --blue: #58a6ff;
+    --amber: #d29922;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  h1 { font-size: 20px; font-weight: 600; margin: 0; }
+  .updated { font-size: 13px; color: var(--muted); }
+  .subtitle { color: var(--muted); font-size: 14px; margin: 0 0 28px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .stat .label { font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .stat .value { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stat .value.pos { color: var(--green); }
+  .stat .value.neg { color: var(--red); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .card h2 { font-size: 14px; font-weight: 600; margin: 0 0 16px; color: var(--text); }
+  .card .empty { color: var(--muted); font-size: 13px; text-align: center; padding: 24px 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+  td { padding: 8px; border-bottom: 1px solid #21262d; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; }
+  .pos { color: var(--green); }
+  .neg { color: var(--red); }
+  .ticker { font-weight: 600; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .chart-wrap { position: relative; width: 100%; height: 320px; }
+  .chart-wrap.small { height: 220px; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+  .badge.green { background: rgba(63,185,80,0.15); color: var(--green); }
+  .badge.red { background: rgba(248,81,73,0.15); color: var(--red); }
+
+  .heatmap-grid { display: grid; grid-template-columns: 50px repeat(12, 1fr); gap: 3px; font-size: 11px; }
+  .heatmap-grid .hcell { display: flex; align-items: center; justify-content: center; padding: 6px 2px; border-radius: 4px; color: var(--text); min-height: 28px; }
+  .heatmap-grid .hlabel { color: var(--muted); display: flex; align-items: center; }
+
+  .footer-note { color: var(--muted); font-size: 12px; text-align: center; margin-top: 32px; line-height: 1.6; }
+  a { color: var(--blue); }
+
+  .cal-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .cal-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(5, 20px); gap: 3px; width: max-content; }
+  .cal-cell { width: 20px; height: 20px; border-radius: 4px; }
+  .cal-legend { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-top: 10px; }
+  .cal-legend .cal-cell { width: 14px; height: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Momentum bot</h1>
+    <span class="updated" id="updated">loading…</span>
+  </header>
+  <p class="subtitle">S&amp;P 500 cross-sectional momentum · weekly rebalance · paper trading on Alpaca</p>
+
+  <div class="grid" id="stat-grid"></div>
+
+  <div class="card">
+    <h2>Equity curve vs SPY</h2>
+    <div class="chart-wrap"><canvas id="equityChart" role="img" aria-label="Portfolio equity curve compared to SPY benchmark"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h2>Drawdown</h2>
+    <div class="chart-wrap small"><canvas id="ddChart" role="img" aria-label="Portfolio drawdown from peak over time"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h2>Daily P/L calendar</h2>
+    <div id="daily-calendar"><div class="empty">Loading…</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h2>Monthly returns</h2>
+      <div id="heatmap"><div class="empty">Needs more than one month of data</div></div>
+    </div>
+    <div class="card">
+      <h2>Trade stats</h2>
+      <div class="chart-wrap small"><canvas id="winChart" role="img" aria-label="Win rate pie chart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Open positions</h2>
+    <div id="positions"></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h2>Top winners</h2>
+      <div id="winners"></div>
+    </div>
+    <div class="card">
+      <h2>Worst trades</h2>
+      <div id="losers"></div>
+    </div>
+  </div>
+
+  <p class="footer-note">
+    Paper trading account — no real money. Updates when you run publish_dashboard.py in Colab.<br>
+    <a href="https://github.com/Andreas999199191/Auto-bot" target="_blank">View source</a>
+  </p>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const GREEN = '#3fb950', RED = '#f85149', BLUE = '#58a6ff', MUTED = '#8b949e', BORDER = '#21262d';
+
+function fmtMoney(v) {
+  return '$' + Math.round(v).toLocaleString();
+}
+function fmtPct(v, withSign) {
+  const s = (v >= 0 && withSign ? '+' : '') + v.toFixed(2) + '%';
+  return s;
+}
+function pclass(v) { return v >= 0 ? 'pos' : 'neg'; }
+
+async function loadDashboard() {
+  let data;
+  try {
+    const res = await fetch('results.json?t=' + Date.now());
+    data = await res.json();
+  } catch (e) {
+    document.getElementById('updated').textContent = 'Could not load results.json';
+    return;
+  }
+
+  const updated = new Date(data.last_updated);
+  document.getElementById('updated').textContent = 'Updated ' + updated.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'}) + ' ' + updated.toLocaleTimeString(undefined, {hour:'2-digit', minute:'2-digit'});
+
+  const stats = [
+    {label: 'Portfolio value', value: fmtMoney(data.equity_now)},
+    {label: 'Total return', value: fmtPct(data.total_return_pc, true), cls: pclass(data.total_return_pc)},
+    {label: 'vs SPY (alpha)', value: fmtPct(data.alpha_pc, true), cls: pclass(data.alpha_pc)},
+    {label: 'Sharpe ratio', value: data.sharpe.toFixed(2)},
+    {label: 'Max drawdown', value: fmtPct(data.max_drawdown_pc, false), cls: 'neg'},
+    {label: 'Win rate', value: data.win_rate_pc.toFixed(1) + '%'},
+    {label: 'Reward / risk', value: data.reward_risk.toFixed(2)},
+    {label: 'Profit factor', value: data.profit_factor.toFixed(2)},
+  ];
+  document.getElementById('stat-grid').innerHTML = stats.map(s =>
+    `<div class="stat"><div class="label">${s.label}</div><div class="value ${s.cls||''}">${s.value}</div></div>`
+  ).join('');
+
+  const eqLabels = data.equity_curve.map(p => p.date);
+  const eqValues = data.equity_curve.map(p => p.equity);
+  const spyMap = {};
+  data.spy_curve.forEach(p => spyMap[p.date] = p.equity);
+  const spyValues = eqLabels.map(d => spyMap[d] ?? null);
+
+  new Chart(document.getElementById('equityChart'), {
+    type: 'line',
+    data: {
+      labels: eqLabels,
+      datasets: [
+        {label: 'Your bot', data: eqValues, borderColor: GREEN, backgroundColor: 'rgba(63,185,80,0.08)', fill: true, tension: 0.15, pointRadius: 0, borderWidth: 2},
+        {label: 'SPY', data: spyValues, borderColor: BLUE, backgroundColor: 'transparent', fill: false, tension: 0.15, pointRadius: 0, borderWidth: 1.5, spanGaps: true},
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: MUTED, usePointStyle: true } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: MUTED, maxTicksLimit: 8 } },
+        y: { grid: { color: BORDER }, ticks: { color: MUTED, callback: v => '$' + (v/1000).toFixed(0) + 'k' } }
+      }
+    }
+  });
+
+  let peak = -Infinity;
+  const dd = eqValues.map(v => { peak = Math.max(peak, v); return ((v - peak) / peak) * 100; });
+  new Chart(document.getElementById('ddChart'), {
+    type: 'line',
+    data: { labels: eqLabels, datasets: [{ data: dd, borderColor: RED, backgroundColor: 'rgba(248,81,73,0.25)', fill: true, tension: 0.1, pointRadius: 0, borderWidth: 1.5 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: MUTED, maxTicksLimit: 8 } },
+        y: { grid: { color: BORDER }, ticks: { color: MUTED, callback: v => v + '%' } }
+      }
+    }
+  });
+
+  const wins = data.trades.filter(t => t.return_pc > 0).length;
+  const losses = data.trades.filter(t => t.return_pc <= 0).length;
+  if (data.trades.length > 0) {
+    new Chart(document.getElementById('winChart'), {
+      type: 'doughnut',
+      data: { labels: [`Wins (${wins})`, `Losses (${losses})`], datasets: [{ data: [wins, losses], backgroundColor: [GREEN, RED], borderColor: '#0d1117', borderWidth: 2 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: MUTED, usePointStyle: true } } } }
+    });
+  } else {
+    document.getElementById('winChart').parentElement.innerHTML = '<div class="empty">No closed trades yet</div>';
+  }
+
+  if (data.equity_curve.length > 5) {
+    const monthly = {};
+    let lastMonth = null, lastVal = null;
+    data.equity_curve.forEach(p => {
+      const ym = p.date.slice(0, 7);
+      if (ym !== lastMonth) {
+        if (lastMonth && lastVal !== null) monthly[lastMonth] = {start: monthly[lastMonth]?.start ?? lastVal, end: lastVal};
+        lastMonth = ym;
+        if (!monthly[ym]) monthly[ym] = {start: p.equity};
+      }
+      lastVal = p.equity;
+      monthly[ym] = {start: monthly[ym].start, end: p.equity};
+    });
+    const years = [...new Set(Object.keys(monthly).map(k => k.slice(0,4)))].sort();
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let html = '<div class="heatmap-grid">';
+    html += '<div></div>' + months.map(m=>`<div class="hlabel" style="justify-content:center;font-weight:600">${m}</div>`).join('');
+    years.forEach(y => {
+      html += `<div class="hlabel">${y}</div>`;
+      for (let m = 1; m <= 12; m++) {
+        const key = y + '-' + String(m).padStart(2,'0');
+        const rec = monthly[key];
+        if (rec) {
+          const ret = ((rec.end - rec.start) / rec.start) * 100;
+          const intensity = Math.min(Math.abs(ret) / 10, 1);
+          const bg = ret >= 0
+            ? `rgba(63,185,80,${0.15 + intensity*0.55})`
+            : `rgba(248,81,73,${0.15 + intensity*0.55})`;
+          html += `<div class="hcell" style="background:${bg}">${ret.toFixed(1)}</div>`;
+        } else {
+          html += `<div class="hcell" style="background:#161b22;color:#30363d">·</div>`;
+        }
+      }
+    });
+    html += '</div>';
+    document.getElementById('heatmap').innerHTML = html;
+  }
+
+  if (data.daily_returns && data.daily_returns.length > 5) {
+    const days = data.daily_returns;
+    const maxAbs = Math.max(...days.map(d => Math.abs(d.ret_pc)), 1);
+    function cellColor(v) {
+      const t = Math.min(Math.abs(v) / maxAbs, 1);
+      const alpha = 0.15 + t * 0.65;
+      return v >= 0 ? `rgba(63,185,80,${alpha})` : `rgba(248,81,73,${alpha})`;
+    }
+    const cols = {};
+    days.forEach(d => {
+      const dt = new Date(d.date + 'T00:00:00');
+      const dow = (dt.getDay() + 6) % 7;
+      if (dow > 4) return;
+      const monday = new Date(dt); monday.setDate(dt.getDate() - dow);
+      const key = monday.toISOString().slice(0,10);
+      if (!cols[key]) cols[key] = new Array(5).fill(null);
+      cols[key][dow] = d;
+    });
+    const weekKeys = Object.keys(cols).sort();
+    let gridHtml = '<div class="cal-scroll"><div class="cal-grid">';
+    weekKeys.forEach(wk => {
+      for (let row = 0; row < 5; row++) {
+        const d = cols[wk][row];
+        if (d) {
+          const title = `${d.date}: ${d.ret_pc >= 0 ? '+' : ''}${d.ret_pc.toFixed(2)}%`;
+          gridHtml += `<div class="cal-cell" style="background:${cellColor(d.ret_pc)}" title="${title}"></div>`;
+        } else {
+          gridHtml += `<div class="cal-cell" style="background:#161b22"></div>`;
+        }
+      }
+    });
+    gridHtml += '</div></div>';
+    const upDays = days.filter(d => d.ret_pc > 0).length;
+    const downDays = days.filter(d => d.ret_pc < 0).length;
+    gridHtml += `<div class="cal-legend">
+      <span>Less</span>
+      <div class="cal-cell" style="background:rgba(248,81,73,0.6)"></div>
+      <div class="cal-cell" style="background:#161b22"></div>
+      <div class="cal-cell" style="background:rgba(63,185,80,0.6)"></div>
+      <span>More</span>
+      <span style="margin-left:16px">${upDays} green days · ${downDays} red days</span>
+    </div>`;
+    document.getElementById('daily-calendar').innerHTML = gridHtml;
+  } else {
+    document.getElementById('daily-calendar').innerHTML = '<div class="empty">Needs more than 5 days of history</div>';
+  }
+
+  if (data.positions.length > 0) {
+    let rows = data.positions.map(p => `
+      <tr>
+        <td class="ticker">${p.ticker}</td>
+        <td class="num">${p.qty}</td>
+        <td class="num">$${p.entry_px.toFixed(2)}</td>
+        <td class="num">$${p.current_px.toFixed(2)}</td>
+        <td class="num">${fmtMoney(p.value)}</td>
+        <td class="num ${pclass(p.unreal_pl)}">${fmtPct(p.unreal_pl_pc, true)}</td>
+      </tr>`).join('');
+    document.getElementById('positions').innerHTML = `
+      <table><thead><tr><th>Ticker</th><th class="num">Qty</th><th class="num">Entry</th><th class="num">Current</th><th class="num">Value</th><th class="num">P/L</th></tr></thead>
+      <tbody>${rows}</tbody></table>`;
+  } else {
+    document.getElementById('positions').innerHTML = '<div class="empty">No open positions</div>';
+  }
+
+  function tradeTable(trades) {
+    if (!trades.length) return '<div class="empty">Not enough closed trades yet</div>';
+    const rows = trades.map(t => `
+      <tr>
+        <td class="ticker">${t.ticker}</td>
+        <td class="num">$${t.entry_px.toFixed(2)}</td>
+        <td class="num">$${t.exit_px.toFixed(2)}</td>
+        <td class="num ${pclass(t.return_pc)}">${fmtPct(t.return_pc, true)}</td>
+      </tr>`).join('');
+    return `<table><thead><tr><th>Ticker</th><th class="num">Entry</th><th class="num">Exit</th><th class="num">Return</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+  document.getElementById('winners').innerHTML = tradeTable(data.top_winners);
+  document.getElementById('losers').innerHTML = tradeTable(data.top_losers);
+}
+
+loadDashboard();
+</script>
+</body>
+</html>
