@@ -93,12 +93,19 @@
   .panel .sub { font-size: 11.5px; color: var(--muted); margin: 0 0 16px; }
 
   .gauge-wrap { display: flex; flex-direction: column; align-items: center; }
-  .gauge-value { font-size: 30px; font-weight: 800; margin-top: -54px; }
+  .gauge-svg { width: 100%; max-width: 220px; }
+  .gauge-value { font-size: 30px; font-weight: 800; margin-top: -8px; }
   .gauge-label { font-size: 12px; color: var(--muted); margin-top: 2px; margin-bottom: 12px; }
   .gauge-tag { padding: 4px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
 
   .chart-wrap { position: relative; width: 100%; height: 210px; }
   .chart-wrap.tall { height: 300px; }
+
+  .cal-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .cal-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(5, 14px); gap: 3px; width: max-content; }
+  .cal-cell { width: 14px; height: 14px; border-radius: 4px; }
+  .cal-legend { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-top: 12px; }
+  .cal-legend .cal-cell { width: 12px; height: 12px; }
 
   .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 13px; }
   .bar-row .bl { width: 56px; font-size: 12.5px; font-weight: 700; flex-shrink: 0; }
@@ -113,8 +120,6 @@
   tbody tr:hover { background: rgba(255,255,255,0.015); }
   td.num { text-align: right; }
   .ticker-cell { font-weight: 700; }
-  .mini-bar-track { width: 70px; height: 6px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; }
-  .mini-bar-fill { height: 100%; border-radius: 4px; }
 
   .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; margin-bottom: 16px; }
   @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
@@ -167,7 +172,11 @@
       <h2>Strategy strength</h2>
       <p class="sub">Sharpe-based score</p>
       <div class="gauge-wrap">
-        <div class="chart-wrap" style="height:150px;"><canvas id="gaugeChart"></canvas></div>
+        <svg class="gauge-svg" viewBox="0 0 200 116" id="gaugeSvg">
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="16" stroke-linecap="round"/>
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#3ddc84" stroke-width="16" stroke-linecap="round"
+                stroke-dasharray="251.2" stroke-dashoffset="251.2" id="gaugeArc"/>
+        </svg>
         <div class="gauge-value" id="gauge-value">--</div>
         <div class="gauge-label">Sharpe ratio</div>
         <div class="gauge-tag" id="gauge-tag">--</div>
@@ -191,6 +200,12 @@
       <p class="sub">Share of total portfolio value</p>
       <div id="weight-bars"></div>
     </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px;">
+    <h2>Daily P/L calendar</h2>
+    <p class="sub">Every trading day, colored by that day's return</p>
+    <div id="daily-calendar"><div class="empty">Loading…</div></div>
   </div>
 
   <div class="two-col-even">
@@ -268,18 +283,12 @@ async function loadDashboard() {
   ).join('');
 
   const sharpe = data.sharpe;
-  const clamped = Math.max(0, Math.min(sharpe, 2));
-  const pct = clamped / 2;
+  const clamped = Math.max(-1, Math.min(sharpe, 2));
+  const pct = (clamped + 1) / 3;
   const gaugeColor = sharpe >= 1 ? GREEN : sharpe >= 0.5 ? AMBER : RED;
-  new Chart(document.getElementById('gaugeChart'), {
-    type: 'doughnut',
-    data: { datasets: [{
-      data: [pct, 1 - pct],
-      backgroundColor: [gaugeColor, 'rgba(255,255,255,0.06)'],
-      borderWidth: 0, circumference: 180, rotation: 270, cutout: '75%',
-    }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { enabled: false } } }
-  });
+  const arcLen = 251.2;
+  document.getElementById('gaugeArc').setAttribute('stroke', gaugeColor);
+  document.getElementById('gaugeArc').setAttribute('stroke-dashoffset', arcLen * (1 - pct));
   document.getElementById('gauge-value').textContent = sharpe.toFixed(2);
   document.getElementById('gauge-value').style.color = gaugeColor;
   const tagEl = document.getElementById('gauge-tag');
@@ -359,6 +368,53 @@ async function loadDashboard() {
   } else {
     document.getElementById('positions-table').innerHTML = '<div class="empty">No open positions</div>';
     document.getElementById('weight-bars').innerHTML = '<div class="empty">No open positions</div>';
+  }
+
+  if (data.daily_returns && data.daily_returns.length > 5) {
+    const days = data.daily_returns;
+    const maxAbs = Math.max(...days.map(d => Math.abs(d.ret_pc)), 1);
+    function cellColor(v) {
+      const t = Math.min(Math.abs(v) / maxAbs, 1);
+      const a = 0.18 + t * 0.65;
+      return v >= 0 ? `rgba(61,220,132,${a})` : `rgba(255,92,92,${a})`;
+    }
+    const cols = {};
+    days.forEach(d => {
+      const dt = new Date(d.date + 'T00:00:00');
+      const dow = (dt.getDay() + 6) % 7;
+      if (dow > 4) return;
+      const monday = new Date(dt); monday.setDate(dt.getDate() - dow);
+      const key = monday.toISOString().slice(0,10);
+      if (!cols[key]) cols[key] = new Array(5).fill(null);
+      cols[key][dow] = d;
+    });
+    const weekKeys = Object.keys(cols).sort();
+    let calHtml = '<div class="cal-scroll"><div class="cal-grid">';
+    weekKeys.forEach(wk => {
+      for (let row = 0; row < 5; row++) {
+        const d = cols[wk][row];
+        if (d) {
+          const title = `${d.date}: ${d.ret_pc >= 0 ? '+' : ''}${d.ret_pc.toFixed(2)}%`;
+          calHtml += `<div class="cal-cell" style="background:${cellColor(d.ret_pc)}" title="${title}"></div>`;
+        } else {
+          calHtml += `<div class="cal-cell" style="background:rgba(255,255,255,0.02)"></div>`;
+        }
+      }
+    });
+    calHtml += '</div></div>';
+    const upDays = days.filter(d => d.ret_pc > 0).length;
+    const downDays = days.filter(d => d.ret_pc < 0).length;
+    calHtml += `<div class="cal-legend">
+      <span>Less</span>
+      <div class="cal-cell" style="background:rgba(255,92,92,0.65)"></div>
+      <div class="cal-cell" style="background:rgba(255,255,255,0.05)"></div>
+      <div class="cal-cell" style="background:rgba(61,220,132,0.65)"></div>
+      <span>More</span>
+      <span style="margin-left:16px">${upDays} green days · ${downDays} red days</span>
+    </div>`;
+    document.getElementById('daily-calendar').innerHTML = calHtml;
+  } else {
+    document.getElementById('daily-calendar').innerHTML = '<div class="empty">Needs more than 5 days of history</div>';
   }
 
   if (data.equity_curve.length > 5) {
