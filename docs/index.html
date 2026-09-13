@@ -365,6 +365,11 @@
       <p class="sub">Closed trades, win vs loss</p>
       <div class="chart-wrap" style="height:210px; max-width:320px; margin:0 auto;"><canvas id="winChart"></canvas></div>
     </div>
+    <div class="panel">
+      <h2>Rebalance history</h2>
+      <p class="sub">Every dated buy/sell activity, most recent first</p>
+      <div id="rebalance-history"></div>
+    </div>
     <div class="two-col-even">
       <div class="panel">
         <h2>Top winners</h2>
@@ -509,6 +514,25 @@ function renderPositionsSummary(containerId, positions) {
         <span class="ps-pct ${pclass(totalPLPct)}">(${fmtPct(totalPLPct, true)})</span>
       </span>
     </div>`;
+}
+
+function renderRebalanceHistory(containerId, history) {
+  const el = document.getElementById(containerId);
+  if (!history || history.length === 0) { el.innerHTML = '<div class="empty">No rebalance history yet</div>'; return; }
+  el.innerHTML = history.map(rb => {
+    const soldHtml = rb.sold.length
+      ? rb.sold.map(t => `<span class="ticker-cell" style="color:${RED}">${t}</span>`).join(', ')
+      : '<span style="color:' + MUTED + '">none</span>';
+    const boughtHtml = rb.bought.length
+      ? rb.bought.map(t => `<span class="ticker-cell" style="color:${GREEN}">${t}</span>`).join(', ')
+      : '<span style="color:' + MUTED + '">none</span>';
+    return `
+      <div class="rebalance-log" style="padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid var(--border);">
+        <div class="rb-date">${rb.date}</div>
+        <div><span style="color:${RED}; font-weight:700;">Sold</span> &nbsp; ${soldHtml}</div>
+        <div><span style="color:${GREEN}; font-weight:700;">Bought</span> &nbsp; ${boughtHtml}</div>
+      </div>`;
+  }).join('');
 }
 
 function earningsBadge(daysUntil) {
@@ -667,6 +691,8 @@ async function loadDashboard() {
   } else {
     document.getElementById('rebalance-log').innerHTML = '<div class="empty">No rebalance activity recorded yet</div>';
   }
+
+  renderRebalanceHistory('rebalance-history', data.rebalance_history);
 
   const ranks = data.momentum_ranks || [];
   if (ranks.length > 0) {
