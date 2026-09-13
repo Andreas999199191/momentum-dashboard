@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-13T09:10:18.405537+00:00",
+  "last_updated": "2026-09-13T09:37:08.139182+00:00",
   "equity_now": 88052.29,
   "cash_now": -17718.88,
   "start_equity": 100000.0,
@@ -1098,140 +1098,160 @@
       "rank": 1,
       "total_qualifying": 298,
       "momentum_pct": 275.93,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 117.23
     },
     {
       "ticker": "HPE",
       "rank": 2,
       "total_qualifying": 298,
       "momentum_pct": 190.42,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 83.24
     },
     {
       "ticker": "MRNA",
       "rank": 3,
       "total_qualifying": 298,
       "momentum_pct": 173.92,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 152.0
     },
     {
       "ticker": "MRVL",
       "rank": 4,
       "total_qualifying": 298,
       "momentum_pct": 168.92,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 52.56
     },
     {
       "ticker": "AMD",
       "rank": 5,
       "total_qualifying": 298,
       "momentum_pct": 166.89,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 48.78
     },
     {
       "ticker": "HUM",
       "rank": 6,
       "total_qualifying": 298,
       "momentum_pct": 149.56,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 45.2
     },
     {
       "ticker": "SNDK",
       "rank": 7,
       "total_qualifying": 298,
       "momentum_pct": 146.87,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 58.01
     },
     {
       "ticker": "MU",
       "rank": 8,
       "total_qualifying": 298,
       "momentum_pct": 129.0,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 56.81
     },
     {
       "ticker": "INTC",
       "rank": 9,
       "total_qualifying": 298,
       "momentum_pct": 124.91,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 36.28
     },
     {
       "ticker": "STX",
       "rank": 10,
       "total_qualifying": 298,
       "momentum_pct": 116.89,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 37.15
     },
     {
       "ticker": "NTAP",
       "rank": 11,
       "total_qualifying": 298,
       "momentum_pct": 103.64,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 51.31
     },
     {
       "ticker": "PANW",
       "rank": 12,
       "total_qualifying": 298,
       "momentum_pct": 97.97,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 40.15
     },
     {
       "ticker": "HPQ",
       "rank": 14,
       "total_qualifying": 298,
       "momentum_pct": 91.55,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 57.4
     },
     {
       "ticker": "CRWD",
       "rank": 15,
       "total_qualifying": 298,
       "momentum_pct": 87.19,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 43.45
     },
     {
       "ticker": "FTNT",
       "rank": 16,
       "total_qualifying": 298,
       "momentum_pct": 87.04,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 39.82
     },
     {
       "ticker": "FLEX",
       "rank": 17,
       "total_qualifying": 298,
       "momentum_pct": 82.47,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 20.65
     },
     {
       "ticker": "MPC",
       "rank": 20,
       "total_qualifying": 298,
       "momentum_pct": 76.2,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 61.99
     },
     {
       "ticker": "ZBRA",
       "rank": 21,
       "total_qualifying": 298,
       "momentum_pct": 72.83,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 34.99
     },
     {
       "ticker": "VLO",
       "rank": 22,
       "total_qualifying": 298,
       "momentum_pct": 70.78,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 61.16
     },
     {
       "ticker": "WDC",
       "rank": 23,
       "total_qualifying": 298,
       "momentum_pct": 64.32,
-      "above_sma": true
+      "above_sma": true,
+      "pct_above_sma": 17.99
     }
   ],
   "regime": {
