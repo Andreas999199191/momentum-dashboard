@@ -671,15 +671,18 @@ async function loadDashboard() {
   const ranks = data.momentum_ranks || [];
   if (ranks.length > 0) {
     document.getElementById('momentum-table').innerHTML = `
-      <table><thead><tr><th>Ticker</th><th class="num">Rank</th><th class="num">6mo Mom.</th><th class="num">Status</th></tr></thead>
+      <table><thead><tr><th>Ticker</th><th class="num">Rank</th><th class="num">6mo Mom.</th><th class="num">vs 200d SMA</th><th class="num">Status</th></tr></thead>
       <tbody>${ranks.map(r => {
         const near = r.rank !== null && r.total_qualifying && r.rank > r.total_qualifying * 0.8;
         const statusColor = r.rank === null ? RED : (near ? WARN : GREEN);
         const statusText = r.rank === null ? 'Dropped out' : (near ? 'At risk' : 'Safe');
+        const smaText = (r.pct_above_sma !== null && r.pct_above_sma !== undefined) ? fmtPct(r.pct_above_sma, true) : 'N/A';
+        const smaCls = (r.pct_above_sma !== null && r.pct_above_sma !== undefined) ? pclass(r.pct_above_sma) : '';
         return `<tr>
           <td class="ticker-cell">${r.ticker}</td>
           <td class="num">${r.rank !== null ? '#' + r.rank + ' / ' + r.total_qualifying : '—'}</td>
           <td class="num ${r.momentum_pct !== null ? pclass(r.momentum_pct) : ''}">${r.momentum_pct !== null ? fmtPct(r.momentum_pct, true) : 'N/A'}</td>
+          <td class="num ${smaCls}">${smaText}</td>
           <td class="num" style="color:${statusColor}; font-weight:700;">${statusText}</td>
         </tr>`;
       }).join('')}</tbody></table>`;
