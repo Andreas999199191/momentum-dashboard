@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-13T09:41:39.178228+00:00",
+  "last_updated": "2026-09-13T14:06:28.260187+00:00",
   "equity_now": 88052.29,
   "cash_now": -17718.88,
   "start_equity": 100000.0,
@@ -1271,6 +1271,156 @@
       "ZBRA"
     ]
   },
+  "rebalance_history": [
+    {
+      "date": "2026-09-08",
+      "sold": [
+        "CRL",
+        "DDOG"
+      ],
+      "bought": [
+        "HPQ",
+        "ZBRA"
+      ]
+    },
+    {
+      "date": "2026-09-01",
+      "sold": [
+        "EXPE"
+      ],
+      "bought": [
+        "WDC"
+      ]
+    },
+    {
+      "date": "2026-08-24",
+      "sold": [
+        "HPQ",
+        "WDC"
+      ],
+      "bought": [
+        "EXPE",
+        "MRNA"
+      ]
+    },
+    {
+      "date": "2026-08-17",
+      "sold": [
+        "AMAT",
+        "CNC"
+      ],
+      "bought": [
+        "CRL",
+        "MPC"
+      ]
+    },
+    {
+      "date": "2026-08-10",
+      "sold": [
+        "DVA",
+        "LITE",
+        "MPC"
+      ],
+      "bought": [
+        "AMAT",
+        "CNC",
+        "HPQ"
+      ]
+    },
+    {
+      "date": "2026-08-03",
+      "sold": [
+        "AMAT",
+        "CIEN"
+      ],
+      "bought": [
+        "CRWD",
+        "HUM"
+      ]
+    },
+    {
+      "date": "2026-07-27",
+      "sold": [
+        "CRWD",
+        "GLW",
+        "VRT"
+      ],
+      "bought": [
+        "AMAT",
+        "CIEN",
+        "NTAP"
+      ]
+    },
+    {
+      "date": "2026-07-20",
+      "sold": [
+        "AMAT",
+        "CIEN",
+        "COHR",
+        "MRNA"
+      ],
+      "bought": [
+        "CRWD",
+        "MPC",
+        "PANW",
+        "VLO"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "sold": [
+        "GNRC",
+        "KLAC",
+        "LRCX",
+        "PANW"
+      ],
+      "bought": [
+        "CIEN",
+        "COHR",
+        "HPE",
+        "VRT"
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "sold": [
+        "CIEN",
+        "COHR",
+        "FIX",
+        "GNRC",
+        "TER"
+      ],
+      "bought": [
+        "DDOG",
+        "DVA",
+        "FTNT",
+        "GNRC",
+        "PANW"
+      ]
+    },
+    {
+      "date": "2026-06-29",
+      "sold": [
+        "ON",
+        "VRT"
+      ],
+      "bought": [
+        "GNRC",
+        "MRNA"
+      ]
+    },
+    {
+      "date": "2026-06-22",
+      "sold": [
+        "HPE",
+        "MRNA"
+      ],
+      "bought": [
+        "FLEX",
+        "MRVL"
+      ]
+    }
+  ],
   "trades": [
     {
       "ticker": "MRNA",
