@@ -202,6 +202,7 @@
     th, td { padding: 8px 6px; font-size: 11.5px; white-space: normal; }
     .bar-row .bl { width: 44px; font-size: 11px; }
     .bar-row .bl[style*="150px"] { width: 88px !important; }
+    .bar-row .bl[style*="90px"] { width: 66px !important; }
 
     .heatmap-grid { grid-template-columns: 28px repeat(12, 1fr); font-size: 9px; }
     .heatmap-grid .hcell { min-height: 20px; }
@@ -346,6 +347,11 @@
       <div id="sector-bars"></div>
     </div>
     <div class="panel">
+      <h2>Market cap exposure</h2>
+      <p class="sub">Portfolio value grouped by company size</p>
+      <div id="cap-bars"></div>
+    </div>
+    <div class="panel">
       <h2>Momentum rank</h2>
       <p class="sub">Where each holding currently ranks by 6-month momentum among qualifying S&amp;P 500 stocks — lower rank means closer to falling out at next rebalance</p>
       <div id="momentum-table" class="table-scroll"></div>
@@ -470,6 +476,21 @@ function renderSectorBars(containerId, sectorBreakdown) {
       <div class="bl" style="width:150px;${flagged ? 'color:'+WARN : ''}">${s.sector}${flagged ? ' ⚠' : ''}</div>
       <div class="bar-track"><div class="bar-fill" style="width:${(s.pct/maxPct)*100}%;background:${flagged ? WARN : color}"></div></div>
       <div class="bv">${s.pct.toFixed(1)}%</div>
+    </div>`;
+  }).join('');
+}
+
+function renderCapBars(containerId, capBreakdown) {
+  const el = document.getElementById(containerId);
+  if (!capBreakdown || capBreakdown.length === 0) { el.innerHTML = '<div class="empty">Market cap data unavailable</div>'; return; }
+  const maxPct = Math.max(...capBreakdown.map(c => c.pct));
+  const tierColors = { 'Mega Cap': ACCENT, 'Large Cap': GREEN, 'Mid Cap': WARN, 'Small Cap': '#f472b6', 'Unknown': MUTED };
+  el.innerHTML = capBreakdown.map(c => {
+    const color = tierColors[c.tier] || MUTED;
+    return `<div class="bar-row">
+      <div class="bl" style="width:90px;">${c.tier}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(c.pct/maxPct)*100}%;background:${color}"></div></div>
+      <div class="bv">${c.pct.toFixed(1)}%</div>
     </div>`;
   }).join('');
 }
@@ -627,6 +648,7 @@ async function loadDashboard() {
   renderWeightBars('weight-bars-dash', data.positions, totalVal);
   renderSectorBars('sector-bars', data.sector_breakdown);
   renderSectorBars('sector-bars-dash', data.sector_breakdown);
+  renderCapBars('cap-bars', data.cap_breakdown);
 
   const rb = data.last_rebalance;
   if (rb && rb.date) {
