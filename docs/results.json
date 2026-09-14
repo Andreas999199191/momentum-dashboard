@@ -1,11 +1,11 @@
 {
-  "last_updated": "2026-09-14T17:04:54.329087+00:00",
-  "equity_now": 85285.92,
+  "last_updated": "2026-09-14T17:24:18.747069+00:00",
+  "equity_now": 85359.09,
   "cash_now": 421.62,
   "start_equity": 100000.0,
-  "total_return_pc": -14.71,
-  "spy_return_pc": 1.89,
-  "alpha_pc": -16.61,
+  "total_return_pc": -14.64,
+  "spy_return_pc": 1.86,
+  "alpha_pc": -16.5,
   "max_drawdown_pc": -30.23,
   "sharpe": -0.67,
   "win_rate_pc": 28.85,
@@ -509,7 +509,7 @@
     },
     {
       "date": "2026-09-14",
-      "equity": 101891.77
+      "equity": 101859.7
     }
   ],
   "daily_returns": [
@@ -763,235 +763,235 @@
       "ticker": "PANW",
       "qty": 12.0053,
       "entry_px": 349.25,
-      "current_px": 376.3,
-      "value": 4517.52,
-      "unreal_pl": 324.68,
-      "unreal_pl_pc": 7.74
+      "current_px": 375.76,
+      "value": 4511.1,
+      "unreal_pl": 318.26,
+      "unreal_pl_pc": 7.59
     },
     {
       "ticker": "CRWD",
       "qty": 18.8138,
       "entry_px": 222.86,
-      "current_px": 238.45,
-      "value": 4486.15,
-      "unreal_pl": 293.31,
-      "unreal_pl_pc": 7.0
+      "current_px": 237.85,
+      "value": 4474.86,
+      "unreal_pl": 282.02,
+      "unreal_pl_pc": 6.73
     },
     {
       "ticker": "FTNT",
       "qty": 25.818,
       "entry_px": 162.4,
-      "current_px": 169.87,
-      "value": 4385.7,
-      "unreal_pl": 192.86,
-      "unreal_pl_pc": 4.6
+      "current_px": 170.31,
+      "value": 4397.06,
+      "unreal_pl": 204.22,
+      "unreal_pl_pc": 4.87
     },
     {
       "ticker": "MRNA",
       "qty": 29.7977,
       "entry_px": 140.71,
-      "current_px": 146.7,
-      "value": 4371.33,
-      "unreal_pl": 178.49,
-      "unreal_pl_pc": 4.26
+      "current_px": 146.44,
+      "value": 4363.58,
+      "unreal_pl": 170.74,
+      "unreal_pl_pc": 4.07
     },
     {
       "ticker": "DDOG",
       "qty": 18.7557,
       "entry_px": 223.55,
-      "current_px": 231.72,
-      "value": 4345.98,
-      "unreal_pl": 153.14,
-      "unreal_pl_pc": 3.65
+      "current_px": 232.09,
+      "value": 4353.11,
+      "unreal_pl": 160.27,
+      "unreal_pl_pc": 3.82
     },
     {
       "ticker": "STX",
       "qty": 5.2539,
       "entry_px": 798.05,
-      "current_px": 812.99,
-      "value": 4271.31,
-      "unreal_pl": 78.47,
-      "unreal_pl_pc": 1.87
+      "current_px": 816.28,
+      "value": 4288.62,
+      "unreal_pl": 95.78,
+      "unreal_pl_pc": 2.28
     },
     {
       "ticker": "DELL",
       "qty": 7.8689,
       "entry_px": 532.83,
-      "current_px": 541.5,
-      "value": 4261.03,
-      "unreal_pl": 68.19,
-      "unreal_pl_pc": 1.63
-    },
-    {
-      "ticker": "CNC",
-      "qty": 61.729,
-      "entry_px": 67.92,
-      "current_px": 68.81,
-      "value": 4247.57,
-      "unreal_pl": 54.73,
-      "unreal_pl_pc": 1.31
-    },
-    {
-      "ticker": "HPE",
-      "qty": 74.4996,
-      "entry_px": 56.28,
-      "current_px": 56.88,
-      "value": 4237.17,
-      "unreal_pl": 44.33,
-      "unreal_pl_pc": 1.06
-    },
-    {
-      "ticker": "MU",
-      "qty": 4.5723,
-      "entry_px": 917.0,
-      "current_px": 924.85,
-      "value": 4228.71,
-      "unreal_pl": 35.87,
-      "unreal_pl_pc": 0.86
-    },
-    {
-      "ticker": "INTC",
-      "qty": 43.0693,
-      "entry_px": 97.35,
-      "current_px": 98.09,
-      "value": 4224.67,
-      "unreal_pl": 31.83,
-      "unreal_pl_pc": 0.76
+      "current_px": 541.38,
+      "value": 4260.08,
+      "unreal_pl": 67.24,
+      "unreal_pl_pc": 1.6
     },
     {
       "ticker": "SNDK",
       "qty": 2.7121,
       "entry_px": 1546.0,
-      "current_px": 1556.73,
-      "value": 4221.94,
-      "unreal_pl": 29.1,
-      "unreal_pl_pc": 0.69
+      "current_px": 1569.95,
+      "value": 4257.79,
+      "unreal_pl": 64.95,
+      "unreal_pl_pc": 1.55
+    },
+    {
+      "ticker": "CNC",
+      "qty": 61.729,
+      "entry_px": 67.92,
+      "current_px": 68.92,
+      "value": 4254.05,
+      "unreal_pl": 61.21,
+      "unreal_pl_pc": 1.46
+    },
+    {
+      "ticker": "MU",
+      "qty": 4.5723,
+      "entry_px": 917.0,
+      "current_px": 926.73,
+      "value": 4237.33,
+      "unreal_pl": 44.49,
+      "unreal_pl_pc": 1.06
+    },
+    {
+      "ticker": "INTC",
+      "qty": 43.0693,
+      "entry_px": 97.35,
+      "current_px": 98.35,
+      "value": 4235.87,
+      "unreal_pl": 43.03,
+      "unreal_pl_pc": 1.03
     },
     {
       "ticker": "AMD",
       "qty": 8.5533,
       "entry_px": 490.2,
-      "current_px": 493.21,
-      "value": 4218.59,
-      "unreal_pl": 25.75,
-      "unreal_pl_pc": 0.61
+      "current_px": 494.6,
+      "value": 4230.47,
+      "unreal_pl": 37.63,
+      "unreal_pl_pc": 0.9
+    },
+    {
+      "ticker": "HPE",
+      "qty": 74.4996,
+      "entry_px": 56.28,
+      "current_px": 56.78,
+      "value": 4230.13,
+      "unreal_pl": 37.29,
+      "unreal_pl_pc": 0.89
     },
     {
       "ticker": "MRVL",
       "qty": 18.9533,
       "entry_px": 221.22,
-      "current_px": 222.25,
-      "value": 4212.27,
-      "unreal_pl": 19.43,
-      "unreal_pl_pc": 0.46
+      "current_px": 222.46,
+      "value": 4216.25,
+      "unreal_pl": 23.41,
+      "unreal_pl_pc": 0.56
     },
     {
       "ticker": "HUM",
       "qty": 10.1549,
       "entry_px": 412.89,
-      "current_px": 413.81,
-      "value": 4202.18,
-      "unreal_pl": 9.34,
-      "unreal_pl_pc": 0.22
+      "current_px": 413.47,
+      "value": 4198.73,
+      "unreal_pl": 5.89,
+      "unreal_pl_pc": 0.14
     },
     {
       "ticker": "NTAP",
       "qty": 21.8707,
       "entry_px": 191.71,
-      "current_px": 192.09,
-      "value": 4201.15,
-      "unreal_pl": 8.31,
-      "unreal_pl_pc": 0.2
-    },
-    {
-      "ticker": "HPQ",
-      "qty": 120.2765,
-      "entry_px": 34.86,
-      "current_px": 33.99,
-      "value": 4088.2,
-      "unreal_pl": -104.64,
-      "unreal_pl_pc": -2.5
+      "current_px": 191.14,
+      "value": 4180.37,
+      "unreal_pl": -12.47,
+      "unreal_pl_pc": -0.3
     },
     {
       "ticker": "CRL",
       "qty": 14.9366,
       "entry_px": 280.71,
-      "current_px": 273.69,
-      "value": 4087.99,
-      "unreal_pl": -104.85,
-      "unreal_pl_pc": -2.5
+      "current_px": 274.43,
+      "value": 4099.04,
+      "unreal_pl": -93.8,
+      "unreal_pl_pc": -2.24
+    },
+    {
+      "ticker": "HPQ",
+      "qty": 120.2765,
+      "entry_px": 34.86,
+      "current_px": 33.9,
+      "value": 4077.37,
+      "unreal_pl": -115.47,
+      "unreal_pl_pc": -2.75
     },
     {
       "ticker": "MPC",
       "qty": 10.3269,
       "entry_px": 406.01,
-      "current_px": 391.66,
-      "value": 4044.65,
-      "unreal_pl": -148.19,
-      "unreal_pl_pc": -3.53
+      "current_px": 392.76,
+      "value": 4056.01,
+      "unreal_pl": -136.83,
+      "unreal_pl_pc": -3.26
     },
     {
       "ticker": "VLO",
       "qty": 10.5414,
       "entry_px": 397.75,
-      "current_px": 380.46,
-      "value": 4010.58,
-      "unreal_pl": -182.26,
-      "unreal_pl_pc": -4.35
+      "current_px": 380.6,
+      "value": 4012.06,
+      "unreal_pl": -180.78,
+      "unreal_pl_pc": -4.31
     }
   ],
   "sector_breakdown": [
     {
       "sector": "Technology Hardware, Storage & Peripherals",
-      "value": 25280.8,
-      "pct": 29.79
+      "value": 25294.36,
+      "pct": 29.78
     },
     {
       "sector": "Semiconductors",
-      "value": 16884.24,
-      "pct": 19.9
+      "value": 16919.92,
+      "pct": 19.92
     },
     {
       "sector": "Systems Software",
-      "value": 13389.37,
-      "pct": 15.78
+      "value": 13383.02,
+      "pct": 15.76
     },
     {
       "sector": "Managed Health Care",
-      "value": 8449.75,
-      "pct": 9.96
+      "value": 8452.78,
+      "pct": 9.95
     },
     {
       "sector": "Oil & Gas Refining & Marketing",
-      "value": 8055.23,
-      "pct": 9.49
+      "value": 8068.07,
+      "pct": 9.5
     },
     {
       "sector": "Biotechnology",
-      "value": 4371.33,
-      "pct": 5.15
+      "value": 4363.58,
+      "pct": 5.14
     },
     {
       "sector": "Application Software",
-      "value": 4345.98,
-      "pct": 5.12
+      "value": 4353.11,
+      "pct": 5.13
     },
     {
       "sector": "Life Sciences Tools & Services",
-      "value": 4087.99,
-      "pct": 4.82
+      "value": 4099.04,
+      "pct": 4.83
     }
   ],
   "cap_breakdown": [
     {
       "tier": "Mega Cap",
-      "value": 30158.61,
-      "pct": 35.54
+      "value": 30207.5,
+      "pct": 35.57
     },
     {
       "tier": "Large Cap",
-      "value": 54706.08,
-      "pct": 64.46
+      "value": 54726.38,
+      "pct": 64.43
     }
   ],
   "earnings_calendar": [
@@ -1100,169 +1100,169 @@
     {
       "ticker": "DELL",
       "rank": 1,
-      "total_qualifying": 297,
-      "momentum_pct": 247.66,
+      "total_qualifying": 295,
+      "momentum_pct": 247.64,
       "above_sma": true,
-      "pct_above_sma": 105.77
+      "pct_above_sma": 105.76
     },
     {
       "ticker": "MRNA",
       "rank": 2,
-      "total_qualifying": 297,
-      "momentum_pct": 175.5,
+      "total_qualifying": 295,
+      "momentum_pct": 174.91,
       "above_sma": true,
-      "pct_above_sma": 154.35
+      "pct_above_sma": 153.81
     },
     {
       "ticker": "HPE",
       "rank": 3,
-      "total_qualifying": 297,
-      "momentum_pct": 162.67,
+      "total_qualifying": 295,
+      "momentum_pct": 162.33,
       "above_sma": true,
-      "pct_above_sma": 66.92
+      "pct_above_sma": 66.7
     },
     {
       "ticker": "AMD",
       "rank": 4,
-      "total_qualifying": 297,
-      "momentum_pct": 150.92,
+      "total_qualifying": 295,
+      "momentum_pct": 151.56,
       "above_sma": true,
-      "pct_above_sma": 41.62
+      "pct_above_sma": 41.97
     },
     {
       "ticker": "HUM",
       "rank": 5,
-      "total_qualifying": 297,
-      "momentum_pct": 144.83,
+      "total_qualifying": 295,
+      "momentum_pct": 145.04,
       "above_sma": true,
-      "pct_above_sma": 45.89
+      "pct_above_sma": 46.01
     },
     {
       "ticker": "MRVL",
       "rank": 6,
-      "total_qualifying": 297,
-      "momentum_pct": 143.07,
+      "total_qualifying": 295,
+      "momentum_pct": 143.14,
       "above_sma": true,
-      "pct_above_sma": 43.09
-    },
-    {
-      "ticker": "CRWD",
-      "rank": 7,
-      "total_qualifying": 297,
-      "momentum_pct": 125.0,
-      "above_sma": true,
-      "pct_above_sma": 64.78
+      "pct_above_sma": 43.13
     },
     {
       "ticker": "PANW",
-      "rank": 8,
-      "total_qualifying": 297,
-      "momentum_pct": 124.63,
+      "rank": 7,
+      "total_qualifying": 295,
+      "momentum_pct": 124.62,
       "above_sma": true,
-      "pct_above_sma": 58.79
+      "pct_above_sma": 58.77
+    },
+    {
+      "ticker": "CRWD",
+      "rank": 8,
+      "total_qualifying": 295,
+      "momentum_pct": 124.59,
+      "above_sma": true,
+      "pct_above_sma": 64.49
     },
     {
       "ticker": "SNDK",
       "rank": 9,
-      "total_qualifying": 297,
-      "momentum_pct": 121.42,
+      "total_qualifying": 295,
+      "momentum_pct": 123.2,
       "above_sma": true,
-      "pct_above_sma": 49.76
+      "pct_above_sma": 50.95
     },
     {
       "ticker": "INTC",
       "rank": 10,
-      "total_qualifying": 297,
-      "momentum_pct": 114.53,
+      "total_qualifying": 295,
+      "momentum_pct": 114.98,
       "above_sma": true,
-      "pct_above_sma": 29.43
+      "pct_above_sma": 29.69
     },
     {
       "ticker": "MU",
       "rank": 11,
-      "total_qualifying": 297,
-      "momentum_pct": 109.54,
+      "total_qualifying": 295,
+      "momentum_pct": 109.93,
       "above_sma": true,
-      "pct_above_sma": 47.93
+      "pct_above_sma": 48.2
     },
     {
       "ticker": "STX",
       "rank": 12,
-      "total_qualifying": 297,
-      "momentum_pct": 104.36,
+      "total_qualifying": 295,
+      "momentum_pct": 105.13,
       "above_sma": true,
-      "pct_above_sma": 33.68
+      "pct_above_sma": 34.18
     },
     {
       "ticker": "FTNT",
       "rank": 13,
-      "total_qualifying": 297,
-      "momentum_pct": 100.99,
+      "total_qualifying": 295,
+      "momentum_pct": 101.7,
       "above_sma": true,
-      "pct_above_sma": 51.53
+      "pct_above_sma": 52.06
     },
     {
       "ticker": "CNC",
       "rank": 14,
-      "total_qualifying": 297,
-      "momentum_pct": 97.96,
+      "total_qualifying": 295,
+      "momentum_pct": 98.19,
       "above_sma": true,
-      "pct_above_sma": 34.74
+      "pct_above_sma": 34.89
     },
     {
       "ticker": "NTAP",
       "rank": 15,
-      "total_qualifying": 297,
-      "momentum_pct": 89.39,
+      "total_qualifying": 295,
+      "momentum_pct": 88.48,
       "above_sma": true,
-      "pct_above_sma": 45.36
+      "pct_above_sma": 44.67
     },
     {
       "ticker": "HPQ",
       "rank": 16,
-      "total_qualifying": 297,
-      "momentum_pct": 85.88,
+      "total_qualifying": 295,
+      "momentum_pct": 85.55,
       "above_sma": true,
-      "pct_above_sma": 50.37
+      "pct_above_sma": 50.1
     },
     {
       "ticker": "DDOG",
       "rank": 17,
-      "total_qualifying": 297,
-      "momentum_pct": 83.06,
+      "total_qualifying": 295,
+      "momentum_pct": 83.37,
       "above_sma": true,
-      "pct_above_sma": 30.33
+      "pct_above_sma": 30.55
     },
     {
       "ticker": "CRL",
       "rank": 18,
-      "total_qualifying": 297,
-      "momentum_pct": 80.15,
+      "total_qualifying": 295,
+      "momentum_pct": 80.57,
       "above_sma": true,
-      "pct_above_sma": 34.9
+      "pct_above_sma": 35.21
     },
     {
       "ticker": "MPC",
-      "rank": 20,
-      "total_qualifying": 297,
-      "momentum_pct": 72.2,
+      "rank": 19,
+      "total_qualifying": 295,
+      "momentum_pct": 72.79,
       "above_sma": true,
-      "pct_above_sma": 59.58
+      "pct_above_sma": 60.13
     },
     {
       "ticker": "VLO",
       "rank": 22,
-      "total_qualifying": 297,
-      "momentum_pct": 65.18,
+      "total_qualifying": 295,
+      "momentum_pct": 64.99,
       "above_sma": true,
-      "pct_above_sma": 56.54
+      "pct_above_sma": 56.36
     }
   ],
   "regime": {
     "risk_on": true,
-    "spy_price": 762.56,
+    "spy_price": 762.32,
     "spy_sma200": 712.55,
-    "pct_from_sma": 7.02
+    "pct_from_sma": 6.98
   },
   "last_rebalance": {
     "date": "2026-09-14",
@@ -1508,6 +1508,23 @@
       ]
     }
   ],
+  "risk_summary": {
+    "top_sector": {
+      "sector": "Technology Hardware, Storage & Peripherals",
+      "value": 25294.36,
+      "pct": 29.78
+    },
+    "at_risk_holdings": [],
+    "dropped_out_holdings": [],
+    "imminent_earnings": [],
+    "pnl_concentration": {
+      "ticker": "PANW",
+      "pnl": 318.26,
+      "pct_of_total_gain": 29.55
+    },
+    "market_breadth_pct": 58.65,
+    "vix_level": 16.71
+  },
   "trades": [
     {
       "ticker": "MRNA",
