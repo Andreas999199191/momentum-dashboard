@@ -834,7 +834,7 @@ async function loadDashboard() {
     document.getElementById('momentum-table').innerHTML = `
       <table><thead><tr><th>Ticker</th><th class="num">Rank</th><th class="num">6mo Mom.</th><th class="num">vs 200d SMA</th><th class="num">Status</th></tr></thead>
       <tbody>${ranks.map(r => {
-        const near = r.rank !== null && r.total_qualifying && r.rank > r.total_qualifying * 0.8;
+        const near = r.rank !== null && r.rank > (data.n_holdings || 20);
         const statusColor = r.rank === null ? RED : (near ? WARN : GREEN);
         const statusText = r.rank === null ? 'Dropped out' : (near ? 'At risk' : 'Safe');
         const smaText = (r.pct_above_sma !== null && r.pct_above_sma !== undefined) ? fmtPct(r.pct_above_sma, true) : 'N/A';
