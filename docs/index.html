@@ -187,6 +187,48 @@
   .risk-alert { background: rgba(239,68,68,0.12); color: var(--red); }
   .risk-static { background: rgba(255,255,255,0.06); color: var(--muted); }
 
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .cal-month-label { font-size: 15px; font-weight: 700; }
+  .cal-nav-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+    color: var(--text); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .cal-nav-btn:hover { background: rgba(255,255,255,0.06); }
+  .cal-nav-btn svg { width: 16px; height: 16px; }
+
+  .cal-legend { display: flex; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+  .cal-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+  .cal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .cal-dot-earn { background: var(--warn); }
+  .cal-dot-rebal { background: var(--accent); }
+  .cal-dot-next { background: var(--green); }
+
+  .cal-weekdays {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+    margin-bottom: 4px; font-size: 10.5px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em; text-align: center;
+  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-cell {
+    min-height: 78px; border-radius: 8px; background: rgba(255,255,255,0.015);
+    border: 1px solid var(--border); padding: 6px; display: flex; flex-direction: column;
+    gap: 3px; overflow: hidden;
+  }
+  .cal-cell.cal-empty { background: transparent; border-color: transparent; }
+  .cal-cell.cal-today { border-color: var(--accent); background: rgba(77,166,255,0.06); }
+  .cal-daynum { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .cal-cell.cal-today .cal-daynum { color: var(--accent); }
+  .cal-event {
+    font-size: 10px; padding: 1px 6px; border-radius: 999px; font-weight: 700;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cal-event-earn { background: rgba(255,179,0,0.14); color: var(--warn); }
+  .cal-event-rebal { background: rgba(77,166,255,0.14); color: var(--accent); }
+  .cal-event-next { background: rgba(34,197,94,0.14); color: var(--green); }
+  .cal-event-more { font-size: 9.5px; color: var(--muted); }
+
   @media (max-width: 760px) {
     .app-body { display: block; }
     .sidebar {
@@ -233,6 +275,14 @@
     .ticker-item { font-size: 10.5px; padding: 0 12px; }
 
     .positions-summary .ps-value { font-size: 15px; }
+
+    .cal-weekdays { font-size: 9px; }
+    .cal-cell { min-height: 52px; padding: 4px; border-radius: 6px; }
+    .cal-daynum { font-size: 10px; }
+    .cal-event { font-size: 8.5px; padding: 1px 4px; }
+    .cal-month-label { font-size: 13px; }
+    .cal-legend { gap: 10px; }
+    .cal-legend-item { font-size: 10px; }
   }
 </style>
 </head>
@@ -253,7 +303,7 @@
   <button class="nav-item active" data-view="dashboard"><span class="nav-dot"></span>Dashboard</button>
   <button class="nav-item" data-view="positions"><span class="nav-dot"></span>Positions</button>
   <button class="nav-item" data-view="history"><span class="nav-dot"></span>Trade history</button>
-  <button class="nav-item" data-view="earnings"><span class="nav-dot"></span>Earnings</button>
+  <button class="nav-item" data-view="earnings"><span class="nav-dot"></span>Calendar</button>
   <div class="nav-section">Strategy</div>
   <button class="nav-item" data-view="kpis"><span class="nav-dot"></span>KPIs</button>
   <button class="nav-item" data-view="risk"><span class="nav-dot"></span>Risk</button>
@@ -404,11 +454,33 @@
     </div>
   </div>
 
-  <!-- EARNINGS -->
+  <!-- CALENDAR -->
   <div class="view" id="view-earnings">
     <div class="panel">
-      <h2>Earnings calendar</h2>
-      <p class="sub">Upcoming reports for every stock currently held — a stock reporting mid-week is unmanaged risk with no stop-loss</p>
+      <h2>Calendar</h2>
+      <p class="sub">Earnings reports for held stocks and rebalance activity — a stock reporting mid-week is unmanaged risk with no stop-loss</p>
+      <div class="cal-header">
+        <button class="cal-nav-btn" id="calPrevBtn" aria-label="Previous month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="cal-month-label" id="calMonthLabel">—</div>
+        <button class="cal-nav-btn" id="calNextBtn" aria-label="Next month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <div class="cal-legend">
+        <span class="cal-legend-item"><span class="cal-dot cal-dot-earn"></span>Earnings</span>
+        <span class="cal-legend-item"><span class="cal-dot cal-dot-rebal"></span>Rebalance</span>
+        <span class="cal-legend-item"><span class="cal-dot cal-dot-next"></span>Next rebalance</span>
+      </div>
+      <div class="cal-weekdays">
+        <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div class="panel">
+      <h2>Upcoming earnings — list view</h2>
+      <p class="sub">Same data as the calendar, sorted by soonest</p>
       <div id="earnings-table" class="table-scroll"></div>
     </div>
   </div>
@@ -463,7 +535,7 @@ function gradientFill(ctx, area, color) {
   return g;
 }
 
-const titles = { dashboard: 'Dashboard', positions: 'Positions', history: 'Trade history', earnings: 'Earnings', kpis: 'KPIs', risk: 'Risk' };
+const titles = { dashboard: 'Dashboard', positions: 'Positions', history: 'Trade history', earnings: 'Calendar', kpis: 'KPIs', risk: 'Risk' };
 document.querySelectorAll('.nav-item[data-view]').forEach(item => {
   item.addEventListener('click', () => {
     const view = item.getAttribute('data-view');
@@ -590,6 +662,114 @@ const RISK_ICONS = {
   globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
   activity: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
 };
+
+// ============================================================================
+//  CALENDAR VIEW — month grid showing earnings + rebalance activity.
+//  Data sources: data.earnings_calendar (real), data.rebalance_history (real).
+//  "Next rebalance" markers are computed client-side (every Monday going
+//  forward) since the bot's schedule is fixed and known — not fetched data.
+// ============================================================================
+let CAL_DATA = null;       // holds the fetched dashboard data for re-renders on nav
+let calViewYear, calViewMonth; // 0-indexed month, like JS Date
+
+function getNextMondays(count) {
+  const mondays = [];
+  const d = new Date();
+  d.setHours(0,0,0,0);
+  // find the next Monday (or today if today is Monday)
+  const day = (d.getDay() + 6) % 7; // 0 = Monday
+  if (day !== 0) d.setDate(d.getDate() + (7 - day));
+  for (let i = 0; i < count; i++) {
+    mondays.push(new Date(d));
+    d.setDate(d.getDate() + 7);
+  }
+  return mondays;
+}
+
+function buildCalendarEvents(data) {
+  const events = {}; // 'YYYY-MM-DD' -> [{type, label}]
+  function addEvent(dateStr, type, label) {
+    if (!events[dateStr]) events[dateStr] = [];
+    events[dateStr].push({ type, label });
+  }
+
+  (data.earnings_calendar || []).forEach(e => {
+    addEvent(e.date, 'earn', e.ticker);
+  });
+
+  (data.rebalance_history || []).forEach(rb => {
+    const total = (rb.sold?.length || 0) + (rb.bought?.length || 0);
+    addEvent(rb.date, 'rebal', `${total} trade${total === 1 ? '' : 's'}`);
+  });
+
+  getNextMondays(8).forEach(d => {
+    const dateStr = d.toISOString().slice(0, 10);
+    if (!events[dateStr] || !events[dateStr].some(e => e.type === 'rebal')) {
+      addEvent(dateStr, 'next', 'Next rebalance');
+    }
+  });
+
+  return events;
+}
+
+function renderCalendarMonth(year, month) {
+  const events = buildCalendarEvents(CAL_DATA || {});
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonthLabel').textContent = `${monthNames[month]} ${year}`;
+
+  const firstOfMonth = new Date(year, month, 1);
+  const startOffset = (firstOfMonth.getDay() + 6) % 7; // 0 = Monday
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayStr = today.toISOString().slice(0,10);
+
+  let html = '';
+  for (let i = 0; i < startOffset; i++) {
+    html += '<div class="cal-cell cal-empty"></div>';
+  }
+  for (let day = 1; day <= daysInMonth; day++) {
+    const cellDate = new Date(year, month, day);
+    const dateStr = cellDate.toISOString().slice(0, 10);
+    const isToday = dateStr === todayStr;
+    const dayEvents = events[dateStr] || [];
+
+    let eventsHtml = '';
+    const shown = dayEvents.slice(0, 3);
+    shown.forEach(ev => {
+      const cls = ev.type === 'earn' ? 'cal-event-earn' : ev.type === 'rebal' ? 'cal-event-rebal' : 'cal-event-next';
+      eventsHtml += `<div class="cal-event ${cls}" title="${ev.label}">${ev.label}</div>`;
+    });
+    if (dayEvents.length > 3) {
+      eventsHtml += `<div class="cal-event-more">+${dayEvents.length - 3} more</div>`;
+    }
+
+    html += `<div class="cal-cell ${isToday ? 'cal-today' : ''}">
+      <div class="cal-daynum">${day}</div>
+      ${eventsHtml}
+    </div>`;
+  }
+
+  document.getElementById('calGrid').innerHTML = html;
+}
+
+function initCalendar(data) {
+  CAL_DATA = data;
+  const now = new Date();
+  calViewYear = now.getFullYear();
+  calViewMonth = now.getMonth();
+  renderCalendarMonth(calViewYear, calViewMonth);
+
+  document.getElementById('calPrevBtn').onclick = () => {
+    calViewMonth--;
+    if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+    renderCalendarMonth(calViewYear, calViewMonth);
+  };
+  document.getElementById('calNextBtn').onclick = () => {
+    calViewMonth++;
+    if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
+    renderCalendarMonth(calViewYear, calViewMonth);
+  };
+}
 
 function riskItem(iconKey, tag, tagClass, title, detail) {
   const iconColorClass = tagClass === 'risk-ok' ? 'icon-ok'
@@ -895,6 +1075,8 @@ async function loadDashboard() {
     document.getElementById('earnings-preview').innerHTML = '<div class="empty">No upcoming earnings found</div>';
     document.getElementById('earnings-table').innerHTML = '<div class="empty">No upcoming earnings data available</div>';
   }
+
+  initCalendar(data);
 
   if (data.daily_returns && data.daily_returns.length > 5) {
     const days = data.daily_returns;
