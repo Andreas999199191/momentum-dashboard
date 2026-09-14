@@ -173,7 +173,11 @@
     padding: 12px 0; border-bottom: 1px solid var(--border);
   }
   .risk-item:last-child { border-bottom: none; }
-  .risk-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .risk-icon { flex-shrink: 0; margin-top: 1px; width: 18px; height: 18px; color: var(--muted); }
+  .risk-icon svg { width: 100%; height: 100%; display: block; }
+  .risk-icon.icon-ok { color: var(--green); }
+  .risk-icon.icon-watch { color: var(--warn); }
+  .risk-icon.icon-alert { color: var(--red); }
   .risk-text { flex: 1; font-size: 13px; line-height: 1.5; }
   .risk-text .risk-title { font-weight: 700; margin-bottom: 2px; }
   .risk-text .risk-detail { color: var(--muted); font-size: 12px; }
@@ -570,9 +574,31 @@ function renderRebalanceHistory(containerId, history) {
   }).join('');
 }
 
-function riskItem(icon, tag, tagClass, title, detail) {
+// Minimal line-style SVG icons (24x24 viewBox, stroke-based), no emojis.
+const RISK_ICONS = {
+  trendUp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>',
+  trendDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 7 9 13 13 9 21 17"/><polyline points="14 17 21 17 21 10"/></svg>',
+  barChart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  thermometer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>',
+  alertTriangle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  checkCircle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+  xCircle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+  calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5.25 3.4 9.74 8 11 4.6-1.26 8-5.75 8-11V5z"/></svg>',
+  scale: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="8" cy="6" r="1.6" fill="currentColor" stroke="none"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="16" cy="12" r="1.6" fill="currentColor" stroke="none"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="1.6" fill="currentColor" stroke="none"/></svg>',
+  globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  activity: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+};
+
+function riskItem(iconKey, tag, tagClass, title, detail) {
+  const iconColorClass = tagClass === 'risk-ok' ? 'icon-ok'
+                       : tagClass === 'risk-watch' ? 'icon-watch'
+                       : tagClass === 'risk-alert' ? 'icon-alert'
+                       : '';
+  const iconSvg = RISK_ICONS[iconKey] || RISK_ICONS.barChart;
   return `<div class="risk-item">
-    <div class="risk-icon">${icon}</div>
+    <div class="risk-icon ${iconColorClass}">${iconSvg}</div>
     <div class="risk-text">
       <div class="risk-title">${title}${tag ? `<span class="risk-tag ${tagClass}">${tag}</span>` : ''}</div>
       ${detail ? `<div class="risk-detail">${detail}</div>` : ''}
@@ -589,10 +615,10 @@ function renderRiskPage(data) {
   if (data.regime && data.regime.risk_on !== null) {
     const r = data.regime;
     if (r.risk_on) {
-      marketHtml += riskItem('📈', 'RISK-ON', 'risk-ok', 'Market is above its long-term trend',
+      marketHtml += riskItem('trendUp', 'RISK-ON', 'risk-ok', 'Market is above its long-term trend',
         `SPY is ${r.pct_from_sma >= 0 ? '+' : ''}${r.pct_from_sma}% from its 200-day moving average.`);
     } else {
-      marketHtml += riskItem('📉', 'RISK-OFF', 'risk-alert', 'Market is below its long-term trend',
+      marketHtml += riskItem('trendDown', 'RISK-OFF', 'risk-alert', 'Market is below its long-term trend',
         `SPY is ${r.pct_from_sma}% from its 200-day moving average. This strategy has no regime filter and stays fully invested regardless.`);
     }
   }
@@ -601,7 +627,7 @@ function renderRiskPage(data) {
     const breadth = rs.market_breadth_pct;
     const tag = breadth >= 60 ? 'Healthy' : breadth >= 40 ? 'Mixed' : 'Narrow';
     const tagCls = breadth >= 60 ? 'risk-ok' : breadth >= 40 ? 'risk-watch' : 'risk-alert';
-    marketHtml += riskItem('📊', tag, tagCls, 'Market breadth',
+    marketHtml += riskItem('barChart', tag, tagCls, 'Market breadth',
       `${breadth.toFixed(0)}% of S&amp;P 500 stocks are currently trading above their 200-day average. Narrow breadth (fewer stocks participating) can be an early warning sign, even while headline indices look fine.`);
   }
 
@@ -609,7 +635,7 @@ function renderRiskPage(data) {
     const vix = rs.vix_level;
     const tag = vix < 20 ? 'Calm' : vix < 30 ? 'Elevated' : 'High fear';
     const tagCls = vix < 20 ? 'risk-ok' : vix < 30 ? 'risk-watch' : 'risk-alert';
-    marketHtml += riskItem('🌡️', tag, tagCls, `VIX: ${vix.toFixed(1)}`,
+    marketHtml += riskItem('thermometer', tag, tagCls, `VIX: ${vix.toFixed(1)}`,
       'The VIX measures expected market volatility. Above ~20 suggests elevated uncertainty; above ~30 is typically associated with genuine market stress.');
   }
 
@@ -621,34 +647,34 @@ function renderRiskPage(data) {
   if (rs.top_sector) {
     const s = rs.top_sector;
     if (s.pct >= 40) {
-      portfolioHtml += riskItem('⚠️', 'Concentrated', 'risk-alert', 'Sector concentration',
+      portfolioHtml += riskItem('alertTriangle', 'Concentrated', 'risk-alert', 'Sector concentration',
         `${s.sector} makes up ${s.pct.toFixed(1)}% of your portfolio. A downturn specific to this sector would hit disproportionately hard.`);
     } else {
-      portfolioHtml += riskItem('✅', null, '', 'Sector concentration is reasonable',
+      portfolioHtml += riskItem('checkCircle', null, 'risk-ok', 'Sector concentration is reasonable',
         `Largest sector (${s.sector}) is ${s.pct.toFixed(1)}% of the portfolio.`);
     }
   }
 
   if (rs.at_risk_holdings && rs.at_risk_holdings.length > 0) {
-    portfolioHtml += riskItem('🔻', `${rs.at_risk_holdings.length}`, 'risk-watch', 'Holdings close to falling out of the top 20',
+    portfolioHtml += riskItem('trendDown', `${rs.at_risk_holdings.length}`, 'risk-watch', 'Holdings close to falling out of the top 20',
       `${rs.at_risk_holdings.join(', ')} — currently in the bottom fifth of qualifying momentum ranks. Likely rotation candidates at the next rebalance.`);
   }
 
   if (rs.dropped_out_holdings && rs.dropped_out_holdings.length > 0) {
-    portfolioHtml += riskItem('❌', `${rs.dropped_out_holdings.length}`, 'risk-alert', 'Holdings that no longer qualify at all',
+    portfolioHtml += riskItem('xCircle', `${rs.dropped_out_holdings.length}`, 'risk-alert', 'Holdings that no longer qualify at all',
       `${rs.dropped_out_holdings.join(', ')} — currently below their 200-day average. Will be sold at the next rebalance regardless of price.`);
   }
 
   if (rs.imminent_earnings && rs.imminent_earnings.length > 0) {
     const list = rs.imminent_earnings.map(e => `${e.ticker} (${e.days_until}d)`).join(', ');
-    portfolioHtml += riskItem('📅', `${rs.imminent_earnings.length}`, 'risk-watch', 'Earnings reporting within 5 days',
+    portfolioHtml += riskItem('calendar', `${rs.imminent_earnings.length}`, 'risk-watch', 'Earnings reporting within 5 days',
       `${list} — this strategy has no stop-loss, so a bad earnings reaction is unmanaged risk until the next rebalance.`);
   }
 
   if (rs.pnl_concentration) {
     const pc = rs.pnl_concentration;
     if (pc.pct_of_total_gain >= 40) {
-      portfolioHtml += riskItem('🎯', 'Concentrated', 'risk-watch', 'Gains are concentrated in one position',
+      portfolioHtml += riskItem('target', 'Concentrated', 'risk-watch', 'Gains are concentrated in one position',
         `${pc.ticker} accounts for ${pc.pct_of_total_gain.toFixed(1)}% of total unrealized profit ($${Math.round(pc.pnl).toLocaleString()}). A reversal here would disproportionately affect overall performance.`);
     }
   }
@@ -658,13 +684,13 @@ function renderRiskPage(data) {
 
   // ---- structural risk (static, always shown — these are design facts, not live signals) ----
   const structuralHtml = [
-    riskItem('🛡️', 'By design', 'risk-static', 'No stop-loss',
+    riskItem('shield', 'By design', 'risk-static', 'No stop-loss',
       'Positions can fall significantly between weekly rebalances with no automatic exit. Losses are only addressed at the next Monday rebalance.'),
-    riskItem('⚖️', 'By design', 'risk-static', 'No market regime filter active',
+    riskItem('scale', 'By design', 'risk-static', 'No market regime filter active',
       'The bot stays fully invested through market-wide downturns. A tested regime filter exists (cuts historical max drawdown roughly in half) but is not currently deployed live.'),
-    riskItem('🇺🇸', 'By design', 'risk-static', 'Single market, single asset class',
+    riskItem('globe', 'By design', 'risk-static', 'Single market, single asset class',
       'All holdings are US large-cap equities (S&P 500). No exposure to bonds, commodities, other countries, or asset classes that might behave differently in a crisis.'),
-    riskItem('📐', 'By design', 'risk-static', 'Momentum can reverse sharply',
+    riskItem('activity', 'By design', 'risk-static', 'Momentum can reverse sharply',
       'Momentum strategies are known to underperform badly during sharp market reversals ("momentum crashes"), historically worse than the broad market in those specific periods.'),
   ].join('');
   document.getElementById('risk-structural').innerHTML = structuralHtml;
