@@ -168,6 +168,21 @@
   .positions-summary .ps-value { font-family: var(--mono); font-size: 17px; font-weight: 700; }
   .positions-summary .ps-value .ps-pct { margin-left: 8px; }
 
+  .risk-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+  }
+  .risk-item:last-child { border-bottom: none; }
+  .risk-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .risk-text { flex: 1; font-size: 13px; line-height: 1.5; }
+  .risk-text .risk-title { font-weight: 700; margin-bottom: 2px; }
+  .risk-text .risk-detail { color: var(--muted); font-size: 12px; }
+  .risk-tag { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700; margin-left: 6px; }
+  .risk-ok { background: rgba(34,197,94,0.12); color: var(--green); }
+  .risk-watch { background: rgba(255,179,0,0.12); color: var(--warn); }
+  .risk-alert { background: rgba(239,68,68,0.12); color: var(--red); }
+  .risk-static { background: rgba(255,255,255,0.06); color: var(--muted); }
+
   @media (max-width: 760px) {
     .app-body { display: block; }
     .sidebar {
@@ -237,6 +252,7 @@
   <button class="nav-item" data-view="earnings"><span class="nav-dot"></span>Earnings</button>
   <div class="nav-section">Strategy</div>
   <button class="nav-item" data-view="kpis"><span class="nav-dot"></span>KPIs</button>
+  <button class="nav-item" data-view="risk"><span class="nav-dot"></span>Risk</button>
   <div class="sidebar-footer">
     Paper account · no real money.<br>
     <a href="https://github.com/Andreas999199191/Auto-bot" target="_blank">View source ↗</a>
@@ -402,6 +418,25 @@
     </div>
   </div>
 
+  <!-- RISK -->
+  <div class="view" id="view-risk">
+    <div class="panel">
+      <h2>Market conditions</h2>
+      <p class="sub">Broad market context — informational only, does not affect trading</p>
+      <div id="risk-market"></div>
+    </div>
+    <div class="panel">
+      <h2>Portfolio risk</h2>
+      <p class="sub">Signals from your current holdings that are worth watching</p>
+      <div id="risk-portfolio"></div>
+    </div>
+    <div class="panel">
+      <h2>Structural risk</h2>
+      <p class="sub">Known limitations of this strategy by design — not bugs, just things to be aware of</p>
+      <div id="risk-structural"></div>
+    </div>
+  </div>
+
 </div>
 </div>
 
@@ -424,7 +459,7 @@ function gradientFill(ctx, area, color) {
   return g;
 }
 
-const titles = { dashboard: 'Dashboard', positions: 'Positions', history: 'Trade history', earnings: 'Earnings', kpis: 'KPIs' };
+const titles = { dashboard: 'Dashboard', positions: 'Positions', history: 'Trade history', earnings: 'Earnings', kpis: 'KPIs', risk: 'Risk' };
 document.querySelectorAll('.nav-item[data-view]').forEach(item => {
   item.addEventListener('click', () => {
     const view = item.getAttribute('data-view');
@@ -533,6 +568,106 @@ function renderRebalanceHistory(containerId, history) {
         <div><span style="color:${GREEN}; font-weight:700;">Bought</span> &nbsp; ${boughtHtml}</div>
       </div>`;
   }).join('');
+}
+
+function riskItem(icon, tag, tagClass, title, detail) {
+  return `<div class="risk-item">
+    <div class="risk-icon">${icon}</div>
+    <div class="risk-text">
+      <div class="risk-title">${title}${tag ? `<span class="risk-tag ${tagClass}">${tag}</span>` : ''}</div>
+      ${detail ? `<div class="risk-detail">${detail}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderRiskPage(data) {
+  const rs = data.risk_summary || {};
+
+  // ---- market conditions ----
+  let marketHtml = '';
+
+  if (data.regime && data.regime.risk_on !== null) {
+    const r = data.regime;
+    if (r.risk_on) {
+      marketHtml += riskItem('📈', 'RISK-ON', 'risk-ok', 'Market is above its long-term trend',
+        `SPY is ${r.pct_from_sma >= 0 ? '+' : ''}${r.pct_from_sma}% from its 200-day moving average.`);
+    } else {
+      marketHtml += riskItem('📉', 'RISK-OFF', 'risk-alert', 'Market is below its long-term trend',
+        `SPY is ${r.pct_from_sma}% from its 200-day moving average. This strategy has no regime filter and stays fully invested regardless.`);
+    }
+  }
+
+  if (rs.market_breadth_pct !== null && rs.market_breadth_pct !== undefined) {
+    const breadth = rs.market_breadth_pct;
+    const tag = breadth >= 60 ? 'Healthy' : breadth >= 40 ? 'Mixed' : 'Narrow';
+    const tagCls = breadth >= 60 ? 'risk-ok' : breadth >= 40 ? 'risk-watch' : 'risk-alert';
+    marketHtml += riskItem('📊', tag, tagCls, 'Market breadth',
+      `${breadth.toFixed(0)}% of S&amp;P 500 stocks are currently trading above their 200-day average. Narrow breadth (fewer stocks participating) can be an early warning sign, even while headline indices look fine.`);
+  }
+
+  if (rs.vix_level !== null && rs.vix_level !== undefined) {
+    const vix = rs.vix_level;
+    const tag = vix < 20 ? 'Calm' : vix < 30 ? 'Elevated' : 'High fear';
+    const tagCls = vix < 20 ? 'risk-ok' : vix < 30 ? 'risk-watch' : 'risk-alert';
+    marketHtml += riskItem('🌡️', tag, tagCls, `VIX: ${vix.toFixed(1)}`,
+      'The VIX measures expected market volatility. Above ~20 suggests elevated uncertainty; above ~30 is typically associated with genuine market stress.');
+  }
+
+  document.getElementById('risk-market').innerHTML = marketHtml || '<div class="empty">Market data unavailable</div>';
+
+  // ---- portfolio risk ----
+  let portfolioHtml = '';
+
+  if (rs.top_sector) {
+    const s = rs.top_sector;
+    if (s.pct >= 40) {
+      portfolioHtml += riskItem('⚠️', 'Concentrated', 'risk-alert', 'Sector concentration',
+        `${s.sector} makes up ${s.pct.toFixed(1)}% of your portfolio. A downturn specific to this sector would hit disproportionately hard.`);
+    } else {
+      portfolioHtml += riskItem('✅', null, '', 'Sector concentration is reasonable',
+        `Largest sector (${s.sector}) is ${s.pct.toFixed(1)}% of the portfolio.`);
+    }
+  }
+
+  if (rs.at_risk_holdings && rs.at_risk_holdings.length > 0) {
+    portfolioHtml += riskItem('🔻', `${rs.at_risk_holdings.length}`, 'risk-watch', 'Holdings close to falling out of the top 20',
+      `${rs.at_risk_holdings.join(', ')} — currently in the bottom fifth of qualifying momentum ranks. Likely rotation candidates at the next rebalance.`);
+  }
+
+  if (rs.dropped_out_holdings && rs.dropped_out_holdings.length > 0) {
+    portfolioHtml += riskItem('❌', `${rs.dropped_out_holdings.length}`, 'risk-alert', 'Holdings that no longer qualify at all',
+      `${rs.dropped_out_holdings.join(', ')} — currently below their 200-day average. Will be sold at the next rebalance regardless of price.`);
+  }
+
+  if (rs.imminent_earnings && rs.imminent_earnings.length > 0) {
+    const list = rs.imminent_earnings.map(e => `${e.ticker} (${e.days_until}d)`).join(', ');
+    portfolioHtml += riskItem('📅', `${rs.imminent_earnings.length}`, 'risk-watch', 'Earnings reporting within 5 days',
+      `${list} — this strategy has no stop-loss, so a bad earnings reaction is unmanaged risk until the next rebalance.`);
+  }
+
+  if (rs.pnl_concentration) {
+    const pc = rs.pnl_concentration;
+    if (pc.pct_of_total_gain >= 40) {
+      portfolioHtml += riskItem('🎯', 'Concentrated', 'risk-watch', 'Gains are concentrated in one position',
+        `${pc.ticker} accounts for ${pc.pct_of_total_gain.toFixed(1)}% of total unrealized profit ($${Math.round(pc.pnl).toLocaleString()}). A reversal here would disproportionately affect overall performance.`);
+    }
+  }
+
+  if (!portfolioHtml) portfolioHtml = '<div class="empty">No notable portfolio risk signals right now</div>';
+  document.getElementById('risk-portfolio').innerHTML = portfolioHtml;
+
+  // ---- structural risk (static, always shown — these are design facts, not live signals) ----
+  const structuralHtml = [
+    riskItem('🛡️', 'By design', 'risk-static', 'No stop-loss',
+      'Positions can fall significantly between weekly rebalances with no automatic exit. Losses are only addressed at the next Monday rebalance.'),
+    riskItem('⚖️', 'By design', 'risk-static', 'No market regime filter active',
+      'The bot stays fully invested through market-wide downturns. A tested regime filter exists (cuts historical max drawdown roughly in half) but is not currently deployed live.'),
+    riskItem('🇺🇸', 'By design', 'risk-static', 'Single market, single asset class',
+      'All holdings are US large-cap equities (S&P 500). No exposure to bonds, commodities, other countries, or asset classes that might behave differently in a crisis.'),
+    riskItem('📐', 'By design', 'risk-static', 'Momentum can reverse sharply',
+      'Momentum strategies are known to underperform badly during sharp market reversals ("momentum crashes"), historically worse than the broad market in those specific periods.'),
+  ].join('');
+  document.getElementById('risk-structural').innerHTML = structuralHtml;
 }
 
 function earningsBadge(daysUntil) {
@@ -832,6 +967,8 @@ async function loadDashboard() {
   document.getElementById('kpi-table').innerHTML = kpis.map(k =>
     `<tr><td>${k.label}</td><td class="${k.cls||''}">${k.value}</td></tr>`
   ).join('');
+
+  renderRiskPage(data);
 }
 
 loadDashboard();
