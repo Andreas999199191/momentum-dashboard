@@ -307,6 +307,8 @@
   <div class="nav-section">Strategy</div>
   <button class="nav-item" data-view="kpis"><span class="nav-dot"></span>KPIs</button>
   <button class="nav-item" data-view="risk"><span class="nav-dot"></span>Risk</button>
+  <div class="nav-section">Other bots</div>
+  <button class="nav-item" data-view="sector"><span class="nav-dot"></span>Sector Bot</button>
   <div class="sidebar-footer">
     Paper account · no real money.<br>
     <a href="https://github.com/Andreas999199191/Auto-bot" target="_blank">View source ↗</a>
@@ -513,6 +515,72 @@
     </div>
   </div>
 
+  <!-- SECTOR BOT -->
+  <div class="view" id="view-sector">
+    <div class="panel">
+      <h2>Sector Rotation</h2>
+      <p class="sub">A separate bot, separate paper account. Monthly rebalance: holds the top 3 of 11 SPDR sector ETFs, ranked by 12-1 momentum, filtered to sectors above their 200-day average.</p>
+    </div>
+
+    <div class="stat-row" id="sector-stat-row"></div>
+
+    <div class="panel">
+      <h2>Equity vs SPY</h2>
+      <p class="sub">Portfolio value over time, benchmarked to the S&amp;P 500</p>
+      <div class="chart-wrap tall"><canvas id="sectorEquityChart"></canvas></div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <h2>Currently held</h2>
+        <p class="sub">The 3 sectors currently in the portfolio</p>
+        <div id="sector-positions"></div>
+      </div>
+      <div class="panel">
+        <h2>Full sector momentum ranking</h2>
+        <p class="sub">All 11 sectors, ranked — held sectors are highlighted</p>
+        <div id="sector-ranking" class="table-scroll"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Drawdown</h2>
+      <p class="sub">Percentage below peak equity</p>
+      <div class="chart-wrap" style="height:170px;"><canvas id="sectorDdChart"></canvas></div>
+    </div>
+
+    <div class="panel">
+      <h2>Daily P/L calendar</h2>
+      <p class="sub">Every trading day, colored by that day's return</p>
+      <div id="sector-daily-calendar"><div class="empty">Loading…</div></div>
+    </div>
+
+    <div class="two-col-even">
+      <div class="panel">
+        <h2>Top winners</h2>
+        <p class="sub">Best closed trades so far</p>
+        <div id="sector-winners" class="table-scroll"></div>
+      </div>
+      <div class="panel">
+        <h2>Worst trades</h2>
+        <p class="sub">Weakest closed trades so far</p>
+        <div id="sector-losers" class="table-scroll"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Rebalance history</h2>
+      <p class="sub">Every dated buy/sell activity, most recent first</p>
+      <div id="sector-rebalance-history"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Key performance indicators</h2>
+      <p class="sub">Raw strategy metrics, no charts</p>
+      <table class="kpi-table" id="sector-kpi-table"></table>
+    </div>
+  </div>
+
 </div>
 </div>
 
@@ -535,7 +603,7 @@ function gradientFill(ctx, area, color) {
   return g;
 }
 
-const titles = { dashboard: 'Dashboard', positions: 'Positions', history: 'Trade history', earnings: 'Calendar', kpis: 'KPIs', risk: 'Risk' };
+const titles = { dashboard: 'Dashboard', positions: 'Positions', history: 'Trade history', earnings: 'Calendar', kpis: 'KPIs', risk: 'Risk', sector: 'Sector Bot' };
 document.querySelectorAll('.nav-item[data-view]').forEach(item => {
   item.addEventListener('click', () => {
     const view = item.getAttribute('data-view');
@@ -546,6 +614,12 @@ document.querySelectorAll('.nav-item[data-view]').forEach(item => {
     requestAnimationFrame(() => {
       if (view === 'dashboard') { equityChartInstance && equityChartInstance.resize(); ddChartInstance && ddChartInstance.resize(); }
       if (view === 'history') { winChartInstance && winChartInstance.resize(); }
+      if (view === 'sector') {
+        loadSectorDashboard().then(() => {
+          sectorEquityChartInstance && sectorEquityChartInstance.resize();
+          sectorDdChartInstance && sectorDdChartInstance.resize();
+        });
+      }
     });
   });
 });
@@ -1188,6 +1262,188 @@ async function loadDashboard() {
   ).join('');
 
   renderRiskPage(data);
+}
+
+// ============================================================================
+//  SECTOR BOT DASHBOARD — completely separate data source (results_sector.json),
+//  separate paper account, separate strategy. Reuses shared helper functions
+//  (fmtMoney, fmtPct, pclass, gradientFill) already defined above, but keeps
+//  its own chart instances and its own fetch/render cycle. Loads lazily, the
+//  first time the Sector Bot tab is actually clicked, so it never slows down
+//  the main dashboard's initial load.
+// ============================================================================
+let sectorDataLoaded = false;
+let sectorEquityChartInstance = null;
+let sectorDdChartInstance = null;
+
+async function loadSectorDashboard() {
+  if (sectorDataLoaded) return; // only fetch once per page visit
+  let data;
+  try {
+    const res = await fetch('results_sector.json?t=' + Date.now());
+    data = await res.json();
+  } catch (e) {
+    document.getElementById('sector-stat-row').innerHTML = '<div class="empty">Could not load sector bot data</div>';
+    return;
+  }
+  sectorDataLoaded = true;
+
+  const stats = [
+    {label: 'Portfolio value', value: fmtMoney(data.equity_now)},
+    {label: 'Total return', value: fmtPct(data.total_return_pc, true), cls: pclass(data.total_return_pc)},
+    {label: 'vs SPY (alpha)', value: fmtPct(data.alpha_pc, true), cls: pclass(data.alpha_pc)},
+    {label: 'Max drawdown', value: fmtPct(data.max_drawdown_pc, false), cls: 'neg'},
+    {label: 'Win rate', value: data.win_rate_pc.toFixed(1) + '%'},
+    {label: 'Profit factor', value: data.profit_factor.toFixed(2)},
+  ];
+  document.getElementById('sector-stat-row').innerHTML = stats.map(s =>
+    `<div class="stat-card"><div class="label">${s.label}</div><div class="val ${s.cls||''}">${s.value}</div></div>`
+  ).join('');
+
+  const eqLabels = data.equity_curve.map(p => p.date);
+  const eqValues = data.equity_curve.map(p => p.equity);
+  const spyMap = {}; data.spy_curve.forEach(p => spyMap[p.date] = p.equity);
+  const spyValues = eqLabels.map(d => spyMap[d] ?? null);
+
+  sectorEquityChartInstance = new Chart(document.getElementById('sectorEquityChart'), {
+    type: 'line',
+    data: { labels: eqLabels, datasets: [
+      { label: 'Sector bot', data: eqValues, borderColor: ACCENT,
+        backgroundColor: (c) => { const a = c.chart.chartArea; return a ? gradientFill(c.chart.ctx, a, ACCENT) : null; },
+        fill: true, tension: 0.25, pointRadius: 0, borderWidth: 2.2 },
+      { label: 'SPY', data: spyValues, borderColor: '#8a94a6', borderDash: [4,4],
+        backgroundColor: 'transparent', fill: false, tension: 0.25, pointRadius: 0, borderWidth: 1.4, spanGaps: true },
+    ]},
+    options: { responsive: true, maintainAspectRatio: false, interaction: { intersect: false, mode: 'index' },
+      plugins: { legend: { labels: { color: MUTED, usePointStyle: true, pointStyle: 'circle', padding: 14, font: {size: 11} } },
+        tooltip: { backgroundColor: '#121826', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1 } },
+      scales: { x: { grid: { display: false }, ticks: { color: MUTED, maxTicksLimit: 7, font: {size: 10} } },
+        y: { grid: { color: GRID }, ticks: { color: MUTED, font: {size: 10}, callback: v => '$' + (v/1000).toFixed(0) + 'k' } } } }
+  });
+
+  let peak = -Infinity;
+  const dd = eqValues.map(v => { peak = Math.max(peak, v); return ((v - peak)/peak)*100; });
+  sectorDdChartInstance = new Chart(document.getElementById('sectorDdChart'), {
+    type: 'line',
+    data: { labels: eqLabels, datasets: [{ data: dd, borderColor: RED,
+      backgroundColor: (c) => { const a = c.chart.chartArea; return a ? gradientFill(c.chart.ctx, a, RED) : null; },
+      fill: true, tension: 0.2, pointRadius: 0, borderWidth: 1.8 }] },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#121826', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1 } },
+      scales: { x: { grid: { display: false }, ticks: { color: MUTED, maxTicksLimit: 6, font: {size: 10} } },
+        y: { grid: { color: GRID }, ticks: { color: MUTED, font: {size: 10}, callback: v => v + '%' } } } }
+  });
+
+  if (data.positions.length > 0) {
+    document.getElementById('sector-positions').innerHTML = `
+      <table><thead><tr><th>Ticker</th><th class="num">Value</th><th class="num">P/L</th></tr></thead>
+      <tbody>${data.positions.map(p => `
+        <tr>
+          <td class="ticker-cell">${p.ticker}</td>
+          <td class="num">${fmtMoney(p.value)}</td>
+          <td class="num ${pclass(p.unreal_pl)}">${fmtPct(p.unreal_pl_pc, true)}</td>
+        </tr>`).join('')}</tbody></table>`;
+  } else {
+    document.getElementById('sector-positions').innerHTML = '<div class="empty">No open positions</div>';
+  }
+
+  const snapshot = data.sector_snapshot || [];
+  if (snapshot.length > 0) {
+    document.getElementById('sector-ranking').innerHTML = `
+      <table><thead><tr><th>Sector</th><th class="num">Rank</th><th class="num">12-1 Mom.</th><th class="num">Status</th></tr></thead>
+      <tbody>${snapshot.map(s => {
+        const rowStyle = s.held ? 'background:rgba(77,166,255,0.06);' : '';
+        const statusText = s.held ? 'HELD' : (s.above_sma ? 'Qualifies' : 'Below SMA');
+        const statusColor = s.held ? ACCENT : (s.above_sma ? GREEN : MUTED);
+        return `<tr style="${rowStyle}">
+          <td class="ticker-cell">${s.ticker} <span style="color:${MUTED};font-weight:400;">${s.name}</span></td>
+          <td class="num">${s.rank !== null && s.rank !== undefined ? '#' + s.rank : '—'}</td>
+          <td class="num ${s.momentum_pct !== null ? pclass(s.momentum_pct) : ''}">${s.momentum_pct !== null ? fmtPct(s.momentum_pct, true) : 'N/A'}</td>
+          <td class="num" style="color:${statusColor};font-weight:700;">${statusText}</td>
+        </tr>`;
+      }).join('')}</tbody></table>`;
+  } else {
+    document.getElementById('sector-ranking').innerHTML = '<div class="empty">Sector ranking unavailable</div>';
+  }
+
+  if (data.daily_returns && data.daily_returns.length > 5) {
+    const days = data.daily_returns;
+    const maxAbs = Math.max(...days.map(d => Math.abs(d.ret_pc)), 1);
+    function cellColor(v) {
+      const t = Math.min(Math.abs(v) / maxAbs, 1);
+      const a = 0.18 + t * 0.65;
+      return v >= 0 ? `rgba(34,197,94,${a})` : `rgba(239,68,68,${a})`;
+    }
+    const cols = {};
+    days.forEach(d => {
+      const dt = new Date(d.date + 'T00:00:00');
+      const dow = (dt.getDay() + 6) % 7;
+      if (dow > 4) return;
+      const monday = new Date(dt); monday.setDate(dt.getDate() - dow);
+      const key = monday.toISOString().slice(0,10);
+      if (!cols[key]) cols[key] = new Array(5).fill(null);
+      cols[key][dow] = d;
+    });
+    const weekKeys = Object.keys(cols).sort();
+    let calHtml = '<div class="cal-scroll"><div class="cal-grid">';
+    weekKeys.forEach(wk => {
+      for (let row = 0; row < 5; row++) {
+        const d = cols[wk][row];
+        if (d) {
+          const title = `${d.date}: ${d.ret_pc >= 0 ? '+' : ''}${d.ret_pc.toFixed(2)}%`;
+          calHtml += `<div class="cal-cell" style="background:${cellColor(d.ret_pc)}" title="${title}"></div>`;
+        } else {
+          calHtml += `<div class="cal-cell" style="background:rgba(255,255,255,0.02)"></div>`;
+        }
+      }
+    });
+    calHtml += '</div></div>';
+    document.getElementById('sector-daily-calendar').innerHTML = calHtml;
+  } else {
+    document.getElementById('sector-daily-calendar').innerHTML = '<div class="empty">Needs more than 5 days of history</div>';
+  }
+
+  function tradeTable(trades) {
+    if (!trades.length) return '<div class="empty">Not enough closed trades yet</div>';
+    return `<table><thead><tr><th>Ticker</th><th class="num">Entry</th><th class="num">Exit</th><th class="num">Return</th></tr></thead><tbody>${
+      trades.map(t => `<tr><td class="ticker-cell">${t.ticker}</td><td class="num">$${t.entry_px.toFixed(2)}</td><td class="num">$${t.exit_px.toFixed(2)}</td><td class="num ${pclass(t.return_pc)}">${fmtPct(t.return_pc, true)}</td></tr>`).join('')
+    }</tbody></table>`;
+  }
+  document.getElementById('sector-winners').innerHTML = tradeTable(data.top_winners);
+  document.getElementById('sector-losers').innerHTML = tradeTable(data.top_losers);
+
+  const rbh = data.rebalance_history || [];
+  if (rbh.length > 0) {
+    document.getElementById('sector-rebalance-history').innerHTML = rbh.map(rb => {
+      const soldHtml = rb.sold.length
+        ? rb.sold.map(t => `<span class="ticker-cell" style="color:${RED}">${t}</span>`).join(', ')
+        : '<span style="color:' + MUTED + '">none</span>';
+      const boughtHtml = rb.bought.length
+        ? rb.bought.map(t => `<span class="ticker-cell" style="color:${GREEN}">${t}</span>`).join(', ')
+        : '<span style="color:' + MUTED + '">none</span>';
+      return `<div class="rebalance-log" style="padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid var(--border);">
+        <div class="rb-date">${rb.date}</div>
+        <div><span style="color:${RED}; font-weight:700;">Sold</span> &nbsp; ${soldHtml}</div>
+        <div><span style="color:${GREEN}; font-weight:700;">Bought</span> &nbsp; ${boughtHtml}</div>
+      </div>`;
+    }).join('');
+  } else {
+    document.getElementById('sector-rebalance-history').innerHTML = '<div class="empty">No rebalance activity recorded yet</div>';
+  }
+
+  const cashPct = (data.cash_now / data.equity_now) * 100;
+  const kpis = [
+    { label: 'CAGR %', value: data.cagr_pc !== null ? fmtPct(data.cagr_pc, true) : 'N/A', cls: data.cagr_pc !== null ? pclass(data.cagr_pc) : '' },
+    { label: 'Sharpe', value: data.sharpe.toFixed(2) },
+    { label: 'Max DD %', value: data.max_drawdown_pc.toFixed(2) + '%', cls: 'neg' },
+    { label: 'Volatility %', value: data.volatility_pc !== null ? data.volatility_pc.toFixed(2) + '%' : 'N/A' },
+    { label: 'Win Rate %', value: data.win_rate_pc.toFixed(2) + '%' },
+    { label: 'Trades', value: data.trade_count },
+    { label: '% in Cash', value: cashPct.toFixed(2) + '%' },
+  ];
+  document.getElementById('sector-kpi-table').innerHTML = kpis.map(k =>
+    `<tr><td>${k.label}</td><td class="${k.cls||''}">${k.value}</td></tr>`
+  ).join('');
 }
 
 loadDashboard();
