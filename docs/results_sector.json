@@ -1,0 +1,155 @@
+{
+  "last_updated": "2026-09-16T15:25:57.652114+00:00",
+  "strategy_name": "Sector Rotation",
+  "equity_now": 100099.68,
+  "cash_now": 500.02,
+  "start_equity": 100000.0,
+  "total_return_pc": 0.1,
+  "spy_return_pc": 0.0,
+  "alpha_pc": 0.1,
+  "max_drawdown_pc": 0.0,
+  "sharpe": 0.0,
+  "cagr_pc": null,
+  "volatility_pc": null,
+  "win_rate_pc": 0,
+  "reward_risk": 0,
+  "profit_factor": 0,
+  "trade_count": 0,
+  "n_hold": 3,
+  "equity_curve": [
+    {
+      "date": "2026-09-16",
+      "equity": 100000.0
+    }
+  ],
+  "spy_curve": [
+    {
+      "date": "2026-09-16",
+      "equity": 100000.0
+    }
+  ],
+  "daily_returns": [],
+  "positions": [
+    {
+      "ticker": "XLK",
+      "qty": 178.6708,
+      "entry_px": 185.63,
+      "current_px": 185.91,
+      "value": 33215.79,
+      "unreal_pl": 49.13,
+      "unreal_pl_pc": 0.15
+    },
+    {
+      "ticker": "XLE",
+      "qty": 516.2126,
+      "entry_px": 64.25,
+      "current_px": 64.33,
+      "value": 33205.38,
+      "unreal_pl": 38.72,
+      "unreal_pl_pc": 0.12
+    },
+    {
+      "ticker": "XLV",
+      "qty": 197.0921,
+      "entry_px": 168.28,
+      "current_px": 168.34,
+      "value": 33178.49,
+      "unreal_pl": 11.83,
+      "unreal_pl_pc": 0.04
+    }
+  ],
+  "sector_snapshot": [
+    {
+      "ticker": "XLE",
+      "name": "Energy",
+      "momentum_pct": 50.84,
+      "above_sma": true,
+      "rank": 1,
+      "held": true
+    },
+    {
+      "ticker": "XLK",
+      "name": "Technology",
+      "momentum_pct": 42.92,
+      "above_sma": true,
+      "rank": 2,
+      "held": true
+    },
+    {
+      "ticker": "XLV",
+      "name": "Health Care",
+      "momentum_pct": 26.88,
+      "above_sma": true,
+      "rank": 3,
+      "held": true
+    },
+    {
+      "ticker": "XLB",
+      "name": "Materials",
+      "momentum_pct": 18.16,
+      "above_sma": true,
+      "rank": 4,
+      "held": false
+    },
+    {
+      "ticker": "XLRE",
+      "name": "Real Estate",
+      "momentum_pct": 12.95,
+      "above_sma": true,
+      "rank": 5,
+      "held": false
+    },
+    {
+      "ticker": "XLF",
+      "name": "Financials",
+      "momentum_pct": 10.31,
+      "above_sma": true,
+      "rank": 6,
+      "held": false
+    },
+    {
+      "ticker": "XLP",
+      "name": "Cons. Staples",
+      "momentum_pct": 6.27,
+      "above_sma": true,
+      "rank": 7,
+      "held": false
+    },
+    {
+      "ticker": "XLC",
+      "name": "Communications",
+      "momentum_pct": 0.91,
+      "above_sma": true,
+      "rank": 8,
+      "held": false
+    },
+    {
+      "ticker": "XLI",
+      "name": "Industrials",
+      "momentum_pct": 24.87,
+      "above_sma": false,
+      "rank": null,
+      "held": false
+    },
+    {
+      "ticker": "XLY",
+      "name": "Cons. Discretionary",
+      "momentum_pct": 2.49,
+      "above_sma": false,
+      "rank": null,
+      "held": false
+    },
+    {
+      "ticker": "XLU",
+      "name": "Utilities",
+      "momentum_pct": 5.77,
+      "above_sma": false,
+      "rank": null,
+      "held": false
+    }
+  ],
+  "rebalance_history": [],
+  "trades": [],
+  "top_winners": [],
+  "top_losers": []
+}
