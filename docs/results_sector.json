@@ -1,12 +1,12 @@
 {
-  "last_updated": "2026-09-16T15:25:57.652114+00:00",
+  "last_updated": "2026-09-16T16:51:00.851633+00:00",
   "strategy_name": "Sector Rotation",
-  "equity_now": 100099.68,
+  "equity_now": 100254.99,
   "cash_now": 500.02,
   "start_equity": 100000.0,
-  "total_return_pc": 0.1,
+  "total_return_pc": 0.25,
   "spy_return_pc": 0.0,
-  "alpha_pc": 0.1,
+  "alpha_pc": 0.25,
   "max_drawdown_pc": 0.0,
   "sharpe": 0.0,
   "cagr_pc": null,
@@ -31,31 +31,31 @@
   "daily_returns": [],
   "positions": [
     {
-      "ticker": "XLK",
-      "qty": 178.6708,
-      "entry_px": 185.63,
-      "current_px": 185.91,
-      "value": 33215.79,
-      "unreal_pl": 49.13,
-      "unreal_pl_pc": 0.15
-    },
-    {
       "ticker": "XLE",
       "qty": 516.2126,
       "entry_px": 64.25,
-      "current_px": 64.33,
-      "value": 33205.38,
-      "unreal_pl": 38.72,
-      "unreal_pl_pc": 0.12
+      "current_px": 64.77,
+      "value": 33435.09,
+      "unreal_pl": 268.43,
+      "unreal_pl_pc": 0.81
     },
     {
       "ticker": "XLV",
       "qty": 197.0921,
       "entry_px": 168.28,
-      "current_px": 168.34,
-      "value": 33178.49,
-      "unreal_pl": 11.83,
-      "unreal_pl_pc": 0.04
+      "current_px": 168.38,
+      "value": 33186.37,
+      "unreal_pl": 19.71,
+      "unreal_pl_pc": 0.06
+    },
+    {
+      "ticker": "XLK",
+      "qty": 178.6708,
+      "entry_px": 185.63,
+      "current_px": 185.42,
+      "value": 33129.14,
+      "unreal_pl": -37.52,
+      "unreal_pl_pc": -0.11
     }
   ],
   "sector_snapshot": [
