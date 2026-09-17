@@ -1,68 +1,81 @@
 {
-  "last_updated": "2026-09-16T16:51:00.851633+00:00",
+  "last_updated": "2026-09-17T14:23:20.531938+00:00",
   "strategy_name": "Sector Rotation",
-  "equity_now": 100254.99,
-  "cash_now": 500.02,
+  "equity_now": 100205.95,
+  "cash_now": -30006.95,
   "start_equity": 100000.0,
-  "total_return_pc": 0.25,
-  "spy_return_pc": 0.0,
-  "alpha_pc": 0.25,
-  "max_drawdown_pc": 0.0,
+  "total_return_pc": 0.21,
+  "spy_return_pc": 1.03,
+  "alpha_pc": -0.83,
+  "max_drawdown_pc": -0.52,
   "sharpe": 0.0,
-  "cagr_pc": null,
+  "cagr_pc": 22.84,
   "volatility_pc": null,
-  "win_rate_pc": 0,
-  "reward_risk": 0,
-  "profit_factor": 0,
-  "trade_count": 0,
+  "win_rate_pc": 33.33,
+  "reward_risk": 2.21,
+  "profit_factor": 1.1,
+  "trade_count": 3,
   "n_hold": 3,
   "equity_curve": [
     {
       "date": "2026-09-16",
       "equity": 100000.0
+    },
+    {
+      "date": "2026-09-17",
+      "equity": 99482.18
     }
   ],
   "spy_curve": [
     {
       "date": "2026-09-16",
       "equity": 100000.0
+    },
+    {
+      "date": "2026-09-17",
+      "equity": 101033.09
     }
   ],
-  "daily_returns": [],
+  "daily_returns": [
+    {
+      "date": "2026-09-17",
+      "ret_pc": -0.518
+    }
+  ],
   "positions": [
     {
+      "ticker": "XLK",
+      "qty": 231.8317,
+      "entry_px": 186.96,
+      "current_px": 187.97,
+      "value": 43577.4,
+      "unreal_pl": 233.98,
+      "unreal_pl_pc": 0.54
+    },
+    {
       "ticker": "XLE",
-      "qty": 516.2126,
-      "entry_px": 64.25,
-      "current_px": 64.77,
-      "value": 33435.09,
-      "unreal_pl": 268.43,
-      "unreal_pl_pc": 0.81
+      "qty": 677.8764,
+      "entry_px": 63.94,
+      "current_px": 63.92,
+      "value": 43333.25,
+      "unreal_pl": -10.17,
+      "unreal_pl_pc": -0.02
     },
     {
       "ticker": "XLV",
-      "qty": 197.0921,
-      "entry_px": 168.28,
-      "current_px": 168.38,
-      "value": 33186.37,
-      "unreal_pl": 19.71,
-      "unreal_pl_pc": 0.06
-    },
-    {
-      "ticker": "XLK",
-      "qty": 178.6708,
-      "entry_px": 185.63,
-      "current_px": 185.42,
-      "value": 33129.14,
-      "unreal_pl": -37.52,
-      "unreal_pl_pc": -0.11
+      "qty": 257.3532,
+      "entry_px": 168.42,
+      "current_px": 168.26,
+      "value": 43302.24,
+      "unreal_pl": -41.18,
+      "unreal_pl_pc": -0.1
     }
   ],
   "sector_snapshot": [
     {
       "ticker": "XLE",
       "name": "Energy",
-      "momentum_pct": 50.84,
+      "momentum_pct": 53.49,
       "above_sma": true,
       "rank": 1,
       "held": true
@@ -70,7 +83,7 @@
     {
       "ticker": "XLK",
       "name": "Technology",
-      "momentum_pct": 42.92,
+      "momentum_pct": 40.45,
       "above_sma": true,
       "rank": 2,
       "held": true
@@ -78,7 +91,7 @@
     {
       "ticker": "XLV",
       "name": "Health Care",
-      "momentum_pct": 26.88,
+      "momentum_pct": 26.79,
       "above_sma": true,
       "rank": 3,
       "held": true
@@ -86,23 +99,23 @@
     {
       "ticker": "XLB",
       "name": "Materials",
-      "momentum_pct": 18.16,
+      "momentum_pct": 17.12,
       "above_sma": true,
       "rank": 4,
       "held": false
     },
     {
-      "ticker": "XLRE",
-      "name": "Real Estate",
-      "momentum_pct": 12.95,
+      "ticker": "XLF",
+      "name": "Financials",
+      "momentum_pct": 11.97,
       "above_sma": true,
       "rank": 5,
       "held": false
     },
     {
-      "ticker": "XLF",
-      "name": "Financials",
-      "momentum_pct": 10.31,
+      "ticker": "XLRE",
+      "name": "Real Estate",
+      "momentum_pct": 11.71,
       "above_sma": true,
       "rank": 6,
       "held": false
@@ -110,23 +123,15 @@
     {
       "ticker": "XLP",
       "name": "Cons. Staples",
-      "momentum_pct": 6.27,
+      "momentum_pct": 7.23,
       "above_sma": true,
       "rank": 7,
       "held": false
     },
     {
-      "ticker": "XLC",
-      "name": "Communications",
-      "momentum_pct": 0.91,
-      "above_sma": true,
-      "rank": 8,
-      "held": false
-    },
-    {
       "ticker": "XLI",
       "name": "Industrials",
-      "momentum_pct": 24.87,
+      "momentum_pct": 23.59,
       "above_sma": false,
       "rank": null,
       "held": false
@@ -134,7 +139,7 @@
     {
       "ticker": "XLY",
       "name": "Cons. Discretionary",
-      "momentum_pct": 2.49,
+      "momentum_pct": 2.4,
       "above_sma": false,
       "rank": null,
       "held": false
@@ -142,14 +147,120 @@
     {
       "ticker": "XLU",
       "name": "Utilities",
-      "momentum_pct": 5.77,
+      "momentum_pct": 5.69,
+      "above_sma": false,
+      "rank": null,
+      "held": false
+    },
+    {
+      "ticker": "XLC",
+      "name": "Communications",
+      "momentum_pct": 0.35,
       "above_sma": false,
       "rank": null,
       "held": false
     }
   ],
-  "rebalance_history": [],
-  "trades": [],
-  "top_winners": [],
-  "top_losers": []
+  "rebalance_history": [
+    {
+      "date": "2026-09-17",
+      "sold": [
+        "XLE",
+        "XLK",
+        "XLV"
+      ],
+      "bought": [
+        "XLE",
+        "XLK",
+        "XLV"
+      ]
+    }
+  ],
+  "trades": [
+    {
+      "ticker": "XLV",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 168.28,
+      "exit_px": 168.23,
+      "return_pc": -0.03,
+      "pnl": -9.85
+    },
+    {
+      "ticker": "XLK",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 185.63,
+      "exit_px": 187.01,
+      "return_pc": 0.74,
+      "pnl": 245.75
+    },
+    {
+      "ticker": "XLE",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 64.25,
+      "exit_px": 63.84,
+      "return_pc": -0.64,
+      "pnl": -212.59
+    }
+  ],
+  "top_winners": [
+    {
+      "ticker": "XLK",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 185.63,
+      "exit_px": 187.01,
+      "return_pc": 0.74,
+      "pnl": 245.75
+    },
+    {
+      "ticker": "XLV",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 168.28,
+      "exit_px": 168.23,
+      "return_pc": -0.03,
+      "pnl": -9.85
+    },
+    {
+      "ticker": "XLE",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 64.25,
+      "exit_px": 63.84,
+      "return_pc": -0.64,
+      "pnl": -212.59
+    }
+  ],
+  "top_losers": [
+    {
+      "ticker": "XLE",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 64.25,
+      "exit_px": 63.84,
+      "return_pc": -0.64,
+      "pnl": -212.59
+    },
+    {
+      "ticker": "XLV",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 168.28,
+      "exit_px": 168.23,
+      "return_pc": -0.03,
+      "pnl": -9.85
+    },
+    {
+      "ticker": "XLK",
+      "entry_date": "2026-09-16",
+      "exit_date": "2026-09-17",
+      "entry_px": 185.63,
+      "exit_px": 187.01,
+      "return_pc": 0.74,
+      "pnl": 245.75
+    }
+  ]
 }
