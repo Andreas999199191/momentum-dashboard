@@ -1,16 +1,16 @@
 {
-  "last_updated": "2026-09-17T17:41:04.225156+00:00",
+  "last_updated": "2026-09-18T07:56:49.369552+00:00",
   "strategy_name": "Sector Rotation",
-  "equity_now": 100564.47,
+  "equity_now": 100669.02,
   "cash_now": -30006.95,
   "start_equity": 100000.0,
-  "total_return_pc": 0.56,
-  "spy_return_pc": 1.1,
-  "alpha_pc": -0.54,
+  "total_return_pc": 0.67,
+  "spy_return_pc": 1.13,
+  "alpha_pc": -0.46,
   "max_drawdown_pc": -0.52,
-  "sharpe": 0.0,
-  "cagr_pc": 75.57,
-  "volatility_pc": null,
+  "sharpe": 4.72,
+  "cagr_pc": 94.8,
+  "volatility_pc": 14.18,
   "win_rate_pc": 33.33,
   "reward_risk": 2.21,
   "profit_factor": 1.1,
@@ -24,6 +24,10 @@
     {
       "date": "2026-09-17",
       "equity": 99482.18
+    },
+    {
+      "date": "2026-09-18",
+      "equity": 100744.58
     }
   ],
   "spy_curve": [
@@ -33,42 +37,46 @@
     },
     {
       "date": "2026-09-17",
-      "equity": 101104.7
+      "equity": 101133.88
     }
   ],
   "daily_returns": [
     {
       "date": "2026-09-17",
       "ret_pc": -0.518
+    },
+    {
+      "date": "2026-09-18",
+      "ret_pc": 1.269
     }
   ],
   "positions": [
     {
-      "ticker": "XLE",
-      "qty": 677.8764,
-      "entry_px": 63.94,
-      "current_px": 64.31,
-      "value": 43594.17,
-      "unreal_pl": 250.75,
-      "unreal_pl_pc": 0.58
-    },
-    {
       "ticker": "XLK",
       "qty": 231.8317,
       "entry_px": 186.96,
-      "current_px": 188.0,
-      "value": 43584.36,
-      "unreal_pl": 240.94,
-      "unreal_pl_pc": 0.56
+      "current_px": 189.43,
+      "value": 43915.88,
+      "unreal_pl": 572.46,
+      "unreal_pl_pc": 1.32
     },
     {
       "ticker": "XLV",
       "qty": 257.3532,
       "entry_px": 168.42,
-      "current_px": 168.62,
-      "value": 43394.89,
-      "unreal_pl": 51.47,
-      "unreal_pl_pc": 0.12
+      "current_px": 168.81,
+      "value": 43443.79,
+      "unreal_pl": 100.37,
+      "unreal_pl_pc": 0.23
+    },
+    {
+      "ticker": "XLE",
+      "qty": 677.8764,
+      "entry_px": 63.94,
+      "current_px": 63.9,
+      "value": 43316.3,
+      "unreal_pl": -27.12,
+      "unreal_pl_pc": -0.06
     }
   ],
   "sector_snapshot": [
