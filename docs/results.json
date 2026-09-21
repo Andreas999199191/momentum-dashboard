@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-09-17T14:22:51.510252+00:00",
-  "equity_now": 88005.35,
+  "last_updated": "2026-09-21T17:33:46.801156+00:00",
+  "equity_now": 90625.14,
   "cash_now": 185.56,
   "start_equity": 100000.0,
-  "total_return_pc": -11.99,
-  "spy_return_pc": 1.76,
-  "alpha_pc": -13.76,
+  "total_return_pc": -9.37,
+  "spy_return_pc": 3.48,
+  "alpha_pc": -12.85,
   "max_drawdown_pc": -30.23,
-  "sharpe": -0.89,
+  "sharpe": -0.58,
   "win_rate_pc": 28.3,
   "reward_risk": 0.82,
   "profit_factor": 0.29,
@@ -272,6 +272,14 @@
     {
       "date": "2026-09-17",
       "equity": 85120.59
+    },
+    {
+      "date": "2026-09-18",
+      "equity": 88328.89
+    },
+    {
+      "date": "2026-09-19",
+      "equity": 88530.44
     }
   ],
   "spy_curve": [
@@ -285,7 +293,7 @@
     },
     {
       "date": "2026-06-18",
-      "equity": 99777.93
+      "equity": 99777.92
     },
     {
       "date": "2026-06-22",
@@ -293,11 +301,11 @@
     },
     {
       "date": "2026-06-23",
-      "equity": 98019.52
+      "equity": 98019.51
     },
     {
       "date": "2026-06-24",
-      "equity": 97974.09
+      "equity": 97974.08
     },
     {
       "date": "2026-06-25",
@@ -317,7 +325,7 @@
     },
     {
       "date": "2026-07-01",
-      "equity": 99646.99
+      "equity": 99646.98
     },
     {
       "date": "2026-07-02",
@@ -333,15 +341,15 @@
     },
     {
       "date": "2026-07-08",
-      "equity": 99598.88
+      "equity": 99598.89
     },
     {
       "date": "2026-07-09",
-      "equity": 100442.01
+      "equity": 100442.02
     },
     {
       "date": "2026-07-10",
-      "equity": 100874.94
+      "equity": 100874.93
     },
     {
       "date": "2026-07-13",
@@ -393,7 +401,7 @@
     },
     {
       "date": "2026-07-29",
-      "equity": 97469.01
+      "equity": 97469.02
     },
     {
       "date": "2026-07-30",
@@ -401,7 +409,7 @@
     },
     {
       "date": "2026-07-31",
-      "equity": 99816.68
+      "equity": 99816.69
     },
     {
       "date": "2026-08-03",
@@ -417,7 +425,7 @@
     },
     {
       "date": "2026-08-06",
-      "equity": 102693.47
+      "equity": 102693.48
     },
     {
       "date": "2026-08-07",
@@ -461,11 +469,11 @@
     },
     {
       "date": "2026-08-21",
-      "equity": 102314.0
+      "equity": 102313.99
     },
     {
       "date": "2026-08-24",
-      "equity": 102013.36
+      "equity": 102013.35
     },
     {
       "date": "2026-08-25",
@@ -513,7 +521,7 @@
     },
     {
       "date": "2026-09-10",
-      "equity": 101259.76
+      "equity": 101259.75
     },
     {
       "date": "2026-09-11",
@@ -521,7 +529,7 @@
     },
     {
       "date": "2026-09-14",
-      "equity": 101667.29
+      "equity": 101667.28
     },
     {
       "date": "2026-09-15",
@@ -533,7 +541,15 @@
     },
     {
       "date": "2026-09-17",
-      "equity": 101763.49
+      "equity": 101897.11
+    },
+    {
+      "date": "2026-09-18",
+      "equity": 102028.25
+    },
+    {
+      "date": "2026-09-21",
+      "equity": 103475.57
     }
   ],
   "daily_returns": [
@@ -792,349 +808,357 @@
     {
       "date": "2026-09-17",
       "ret_pc": 0.43
+    },
+    {
+      "date": "2026-09-18",
+      "ret_pc": 3.769
+    },
+    {
+      "date": "2026-09-19",
+      "ret_pc": 0.228
     }
   ],
   "positions": [
     {
-      "ticker": "MRNA",
-      "qty": 29.7977,
-      "entry_px": 140.71,
-      "current_px": 160.86,
-      "value": 4793.26,
-      "unreal_pl": 600.42,
-      "unreal_pl_pc": 14.32
-    },
-    {
       "ticker": "INTC",
       "qty": 43.0693,
       "entry_px": 97.35,
-      "current_px": 109.14,
-      "value": 4700.59,
-      "unreal_pl": 507.75,
-      "unreal_pl_pc": 12.11
-    },
-    {
-      "ticker": "CRWD",
-      "qty": 18.8138,
-      "entry_px": 222.86,
-      "current_px": 246.6,
-      "value": 4639.48,
-      "unreal_pl": 446.64,
-      "unreal_pl_pc": 10.65
-    },
-    {
-      "ticker": "MRVL",
-      "qty": 18.9533,
-      "entry_px": 221.22,
-      "current_px": 242.29,
-      "value": 4592.1,
-      "unreal_pl": 399.26,
-      "unreal_pl_pc": 9.52
-    },
-    {
-      "ticker": "HPE",
-      "qty": 74.4996,
-      "entry_px": 56.28,
-      "current_px": 61.54,
-      "value": 4584.72,
-      "unreal_pl": 391.88,
-      "unreal_pl_pc": 9.35
+      "current_px": 121.43,
+      "value": 5229.91,
+      "unreal_pl": 1037.07,
+      "unreal_pl_pc": 24.73
     },
     {
       "ticker": "AMD",
       "qty": 8.5533,
       "entry_px": 490.2,
-      "current_px": 535.11,
-      "value": 4576.97,
-      "unreal_pl": 384.13,
-      "unreal_pl_pc": 9.16
+      "current_px": 606.74,
+      "value": 5189.61,
+      "unreal_pl": 996.77,
+      "unreal_pl_pc": 23.77
     },
     {
-      "ticker": "DELL",
-      "qty": 7.8689,
-      "entry_px": 532.83,
-      "current_px": 581.18,
-      "value": 4573.27,
-      "unreal_pl": 380.43,
-      "unreal_pl_pc": 9.07
+      "ticker": "MRNA",
+      "qty": 29.7977,
+      "entry_px": 140.71,
+      "current_px": 170.52,
+      "value": 5081.11,
+      "unreal_pl": 888.27,
+      "unreal_pl_pc": 21.19
     },
     {
-      "ticker": "PANW",
-      "qty": 12.0053,
-      "entry_px": 349.25,
-      "current_px": 377.92,
-      "value": 4537.03,
-      "unreal_pl": 344.19,
-      "unreal_pl_pc": 8.21
-    },
-    {
-      "ticker": "FTNT",
-      "qty": 25.818,
-      "entry_px": 162.4,
-      "current_px": 174.07,
-      "value": 4494.14,
-      "unreal_pl": 301.3,
-      "unreal_pl_pc": 7.19
+      "ticker": "MRVL",
+      "qty": 18.9533,
+      "entry_px": 221.22,
+      "current_px": 254.21,
+      "value": 4818.11,
+      "unreal_pl": 625.27,
+      "unreal_pl_pc": 14.91
     },
     {
       "ticker": "MU",
       "qty": 4.5723,
       "entry_px": 917.0,
-      "current_px": 976.26,
-      "value": 4463.8,
-      "unreal_pl": 270.96,
-      "unreal_pl_pc": 6.46
-    },
-    {
-      "ticker": "DDOG",
-      "qty": 18.7557,
-      "entry_px": 223.55,
-      "current_px": 235.97,
-      "value": 4425.79,
-      "unreal_pl": 232.95,
-      "unreal_pl_pc": 5.56
+      "current_px": 1039.6,
+      "value": 4753.41,
+      "unreal_pl": 560.57,
+      "unreal_pl_pc": 13.37
     },
     {
       "ticker": "SNDK",
       "qty": 2.7121,
       "entry_px": 1546.0,
-      "current_px": 1592.84,
-      "value": 4319.87,
-      "unreal_pl": 127.03,
-      "unreal_pl_pc": 3.03
+      "current_px": 1741.24,
+      "value": 4722.34,
+      "unreal_pl": 529.5,
+      "unreal_pl_pc": 12.63
     },
     {
-      "ticker": "NTAP",
-      "qty": 21.8707,
-      "entry_px": 191.71,
-      "current_px": 197.02,
-      "value": 4308.97,
-      "unreal_pl": 116.13,
-      "unreal_pl_pc": 2.77
+      "ticker": "CRWD",
+      "qty": 18.8138,
+      "entry_px": 222.86,
+      "current_px": 247.31,
+      "value": 4652.84,
+      "unreal_pl": 460.0,
+      "unreal_pl_pc": 10.97
     },
     {
-      "ticker": "MPC",
-      "qty": 10.3269,
-      "entry_px": 406.01,
-      "current_px": 414.61,
-      "value": 4281.65,
-      "unreal_pl": 88.81,
-      "unreal_pl_pc": 2.12
-    },
-    {
-      "ticker": "CRL",
-      "qty": 14.9366,
-      "entry_px": 280.71,
-      "current_px": 280.18,
-      "value": 4184.85,
-      "unreal_pl": -7.99,
-      "unreal_pl_pc": -0.19
+      "ticker": "HPE",
+      "qty": 74.4996,
+      "entry_px": 56.28,
+      "current_px": 61.65,
+      "value": 4592.9,
+      "unreal_pl": 400.06,
+      "unreal_pl_pc": 9.54
     },
     {
       "ticker": "STX",
       "qty": 5.2539,
       "entry_px": 798.05,
-      "current_px": 792.97,
-      "value": 4166.15,
-      "unreal_pl": -26.69,
-      "unreal_pl_pc": -0.64
+      "current_px": 871.43,
+      "value": 4578.37,
+      "unreal_pl": 385.53,
+      "unreal_pl_pc": 9.2
+    },
+    {
+      "ticker": "DELL",
+      "qty": 7.8689,
+      "entry_px": 532.83,
+      "current_px": 576.86,
+      "value": 4539.27,
+      "unreal_pl": 346.43,
+      "unreal_pl_pc": 8.26
+    },
+    {
+      "ticker": "DDOG",
+      "qty": 18.7557,
+      "entry_px": 223.55,
+      "current_px": 241.28,
+      "value": 4525.29,
+      "unreal_pl": 332.45,
+      "unreal_pl_pc": 7.93
+    },
+    {
+      "ticker": "FTNT",
+      "qty": 25.818,
+      "entry_px": 162.4,
+      "current_px": 174.49,
+      "value": 4504.98,
+      "unreal_pl": 312.14,
+      "unreal_pl_pc": 7.45
+    },
+    {
+      "ticker": "PANW",
+      "qty": 12.0053,
+      "entry_px": 349.25,
+      "current_px": 369.09,
+      "value": 4431.02,
+      "unreal_pl": 238.18,
+      "unreal_pl_pc": 5.68
+    },
+    {
+      "ticker": "NTAP",
+      "qty": 21.8707,
+      "entry_px": 191.71,
+      "current_px": 198.11,
+      "value": 4332.81,
+      "unreal_pl": 139.97,
+      "unreal_pl_pc": 3.34
+    },
+    {
+      "ticker": "MPC",
+      "qty": 10.3269,
+      "entry_px": 406.01,
+      "current_px": 415.19,
+      "value": 4287.64,
+      "unreal_pl": 94.8,
+      "unreal_pl_pc": 2.26
     },
     {
       "ticker": "ZBRA",
       "qty": 12.0254,
       "entry_px": 353.84,
-      "current_px": 346.05,
-      "value": 4161.39,
-      "unreal_pl": -93.68,
-      "unreal_pl_pc": -2.2
+      "current_px": 350.07,
+      "value": 4209.73,
+      "unreal_pl": -45.34,
+      "unreal_pl_pc": -1.06
+    },
+    {
+      "ticker": "CRL",
+      "qty": 14.9366,
+      "entry_px": 280.71,
+      "current_px": 278.31,
+      "value": 4157.07,
+      "unreal_pl": -35.77,
+      "unreal_pl_pc": -0.85
     },
     {
       "ticker": "CNC",
       "qty": 61.729,
       "entry_px": 67.92,
-      "current_px": 67.14,
-      "value": 4144.79,
-      "unreal_pl": -48.05,
-      "unreal_pl_pc": -1.15
+      "current_px": 64.88,
+      "value": 4004.98,
+      "unreal_pl": -187.86,
+      "unreal_pl_pc": -4.48
     },
     {
       "ticker": "HPQ",
       "qty": 120.2765,
       "entry_px": 34.86,
-      "current_px": 32.97,
-      "value": 3964.92,
-      "unreal_pl": -227.92,
-      "unreal_pl_pc": -5.44
+      "current_px": 33.17,
+      "value": 3989.57,
+      "unreal_pl": -203.27,
+      "unreal_pl_pc": -4.85
     },
     {
       "ticker": "HUM",
       "qty": 10.1549,
       "entry_px": 412.89,
-      "current_px": 384.6,
-      "value": 3905.56,
-      "unreal_pl": -287.28,
-      "unreal_pl_pc": -6.85
+      "current_px": 377.69,
+      "value": 3835.39,
+      "unreal_pl": -357.45,
+      "unreal_pl_pc": -8.53
     }
   ],
   "sector_breakdown": [
     {
       "sector": "Technology Hardware, Storage & Peripherals",
-      "value": 25917.9,
-      "pct": 29.51
+      "value": 26755.26,
+      "pct": 29.58
     },
     {
       "sector": "Semiconductors",
-      "value": 18333.46,
-      "pct": 20.88
+      "value": 19991.04,
+      "pct": 22.11
     },
     {
       "sector": "Systems Software",
-      "value": 13670.65,
-      "pct": 15.57
+      "value": 13588.84,
+      "pct": 15.03
     },
     {
       "sector": "Managed Health Care",
-      "value": 8050.35,
-      "pct": 9.17
+      "value": 7840.37,
+      "pct": 8.67
     },
     {
       "sector": "Biotechnology",
-      "value": 4793.26,
-      "pct": 5.46
+      "value": 5081.11,
+      "pct": 5.62
     },
     {
       "sector": "Application Software",
-      "value": 4425.79,
-      "pct": 5.04
+      "value": 4525.29,
+      "pct": 5.0
     },
     {
       "sector": "Oil & Gas Refining & Marketing",
-      "value": 4281.65,
-      "pct": 4.88
-    },
-    {
-      "sector": "Life Sciences Tools & Services",
-      "value": 4184.85,
-      "pct": 4.77
+      "value": 4287.64,
+      "pct": 4.74
     },
     {
       "sector": "Electronic Equipment & Instruments",
-      "value": 4161.39,
-      "pct": 4.74
+      "value": 4209.73,
+      "pct": 4.65
+    },
+    {
+      "sector": "Life Sciences Tools & Services",
+      "value": 4157.07,
+      "pct": 4.6
     }
   ],
   "cap_breakdown": [
     {
       "tier": "Mega Cap",
-      "value": 36403.11,
-      "pct": 41.45
+      "value": 38336.51,
+      "pct": 42.39
     },
     {
       "tier": "Large Cap",
-      "value": 51416.19,
-      "pct": 58.55
+      "value": 52099.84,
+      "pct": 57.61
     }
   ],
   "earnings_calendar": [
     {
       "ticker": "MU",
       "date": "2026-09-30",
-      "days_until": 13
+      "days_until": 9
     },
     {
       "ticker": "INTC",
       "date": "2026-10-22",
-      "days_until": 35
+      "days_until": 31
     },
     {
       "ticker": "STX",
       "date": "2026-10-27",
-      "days_until": 40
+      "days_until": 36
     },
     {
       "ticker": "CNC",
       "date": "2026-10-27",
-      "days_until": 40
+      "days_until": 36
     },
     {
       "ticker": "AMD",
       "date": "2026-11-03",
-      "days_until": 47
+      "days_until": 43
     },
     {
       "ticker": "MPC",
       "date": "2026-11-03",
-      "days_until": 47
+      "days_until": 43
     },
     {
       "ticker": "ZBRA",
       "date": "2026-11-03",
-      "days_until": 47
+      "days_until": 43
     },
     {
       "ticker": "FTNT",
       "date": "2026-11-04",
-      "days_until": 48
+      "days_until": 44
     },
     {
       "ticker": "CRL",
       "date": "2026-11-04",
-      "days_until": 48
+      "days_until": 44
     },
     {
       "ticker": "MRNA",
       "date": "2026-11-05",
-      "days_until": 49
+      "days_until": 45
     },
     {
       "ticker": "DDOG",
       "date": "2026-11-05",
-      "days_until": 49
+      "days_until": 45
     },
     {
       "ticker": "SNDK",
       "date": "2026-11-06",
-      "days_until": 50
+      "days_until": 46
     },
     {
       "ticker": "HUM",
       "date": "2026-11-06",
-      "days_until": 50
+      "days_until": 46
     },
     {
       "ticker": "PANW",
       "date": "2026-11-19",
-      "days_until": 63
+      "days_until": 59
     },
     {
       "ticker": "HPQ",
       "date": "2026-11-24",
-      "days_until": 68
+      "days_until": 64
     },
     {
       "ticker": "DELL",
       "date": "2026-11-27",
+      "days_until": 67
+    },
+    {
+      "ticker": "MRVL",
+      "date": "2026-12-01",
       "days_until": 71
     },
     {
       "ticker": "CRWD",
       "date": "2026-12-01",
-      "days_until": 75
-    },
-    {
-      "ticker": "MRVL",
-      "date": "2026-12-01",
-      "days_until": 75
+      "days_until": 71
     },
     {
       "ticker": "NTAP",
       "date": "2026-12-01",
-      "days_until": 75
+      "days_until": 71
     },
     {
       "ticker": "HPE",
       "date": "2026-12-03",
-      "days_until": 77
+      "days_until": 73
     }
   ],
   "momentum_ranks": [
@@ -1142,168 +1166,168 @@
       "ticker": "DELL",
       "rank": 1,
       "total_qualifying": 269,
-      "momentum_pct": 272.89,
+      "momentum_pct": 252.36,
       "above_sma": true,
-      "pct_above_sma": 115.72
+      "pct_above_sma": 110.56
     },
     {
       "ticker": "MRNA",
       "rank": 2,
       "total_qualifying": 269,
-      "momentum_pct": 206.84,
+      "momentum_pct": 232.99,
       "above_sma": true,
-      "pct_above_sma": 169.55
+      "pct_above_sma": 180.0
     },
     {
-      "ticker": "HPE",
+      "ticker": "AMD",
       "rank": 3,
       "total_qualifying": 269,
-      "momentum_pct": 181.32,
+      "momentum_pct": 199.46,
       "above_sma": true,
-      "pct_above_sma": 78.13
+      "pct_above_sma": 70.21
     },
     {
       "ticker": "MRVL",
       "rank": 4,
       "total_qualifying": 269,
-      "momentum_pct": 170.94,
+      "momentum_pct": 182.26,
       "above_sma": true,
-      "pct_above_sma": 53.8
+      "pct_above_sma": 59.77
     },
     {
-      "ticker": "AMD",
+      "ticker": "HPE",
       "rank": 5,
       "total_qualifying": 269,
-      "momentum_pct": 160.79,
+      "momentum_pct": 179.15,
       "above_sma": true,
-      "pct_above_sma": 51.71
+      "pct_above_sma": 76.33
     },
     {
       "ticker": "INTC",
       "rank": 6,
       "total_qualifying": 269,
-      "momentum_pct": 136.12,
+      "momentum_pct": 176.28,
       "above_sma": true,
-      "pct_above_sma": 41.95
-    },
-    {
-      "ticker": "HUM",
-      "rank": 7,
-      "total_qualifying": 269,
-      "momentum_pct": 133.01,
-      "above_sma": true,
-      "pct_above_sma": 34.91
-    },
-    {
-      "ticker": "CRWD",
-      "rank": 8,
-      "total_qualifying": 269,
-      "momentum_pct": 130.61,
-      "above_sma": true,
-      "pct_above_sma": 68.6
-    },
-    {
-      "ticker": "PANW",
-      "rank": 9,
-      "total_qualifying": 269,
-      "momentum_pct": 122.84,
-      "above_sma": true,
-      "pct_above_sma": 57.79
+      "pct_above_sma": 56.8
     },
     {
       "ticker": "MU",
-      "rank": 10,
+      "rank": 7,
       "total_qualifying": 269,
-      "momentum_pct": 120.11,
+      "momentum_pct": 157.16,
       "above_sma": true,
-      "pct_above_sma": 53.63
-    },
-    {
-      "ticker": "FTNT",
-      "rank": 11,
-      "total_qualifying": 269,
-      "momentum_pct": 109.59,
-      "above_sma": true,
-      "pct_above_sma": 53.56
+      "pct_above_sma": 61.37
     },
     {
       "ticker": "SNDK",
-      "rank": 12,
+      "rank": 8,
       "total_qualifying": 269,
-      "momentum_pct": 106.52,
+      "momentum_pct": 148.1,
       "above_sma": true,
-      "pct_above_sma": 50.4
+      "pct_above_sma": 61.99
     },
     {
-      "ticker": "NTAP",
+      "ticker": "CRWD",
+      "rank": 9,
+      "total_qualifying": 269,
+      "momentum_pct": 139.38,
+      "above_sma": true,
+      "pct_above_sma": 67.63
+    },
+    {
+      "ticker": "PANW",
+      "rank": 10,
+      "total_qualifying": 269,
+      "momentum_pct": 125.04,
+      "above_sma": true,
+      "pct_above_sma": 52.89
+    },
+    {
+      "ticker": "HUM",
+      "rank": 11,
+      "total_qualifying": 269,
+      "momentum_pct": 123.53,
+      "above_sma": true,
+      "pct_above_sma": 31.63
+    },
+    {
+      "ticker": "STX",
+      "rank": 12,
+      "total_qualifying": 269,
+      "momentum_pct": 116.38,
+      "above_sma": true,
+      "pct_above_sma": 40.25
+    },
+    {
+      "ticker": "FTNT",
       "rank": 13,
       "total_qualifying": 269,
-      "momentum_pct": 92.92,
+      "momentum_pct": 110.81,
       "above_sma": true,
-      "pct_above_sma": 47.92
+      "pct_above_sma": 52.61
     },
     {
       "ticker": "CNC",
       "rank": 14,
       "total_qualifying": 269,
-      "momentum_pct": 88.67,
+      "momentum_pct": 97.74,
       "above_sma": true,
-      "pct_above_sma": 30.35
+      "pct_above_sma": 25.37
     },
     {
-      "ticker": "CRL",
+      "ticker": "NTAP",
       "rank": 15,
       "total_qualifying": 269,
-      "momentum_pct": 83.06,
+      "momentum_pct": 97.17,
       "above_sma": true,
-      "pct_above_sma": 37.07
-    },
-    {
-      "ticker": "HPQ",
-      "rank": 16,
-      "total_qualifying": 269,
-      "momentum_pct": 82.75,
-      "above_sma": true,
-      "pct_above_sma": 45.27
-    },
-    {
-      "ticker": "STX",
-      "rank": 17,
-      "total_qualifying": 269,
-      "momentum_pct": 82.63,
-      "above_sma": true,
-      "pct_above_sma": 28.58
+      "pct_above_sma": 47.61
     },
     {
       "ticker": "DDOG",
-      "rank": 18,
+      "rank": 19,
       "total_qualifying": 269,
-      "momentum_pct": 81.62,
+      "momentum_pct": 86.69,
       "above_sma": true,
-      "pct_above_sma": 31.94
+      "pct_above_sma": 34.29
+    },
+    {
+      "ticker": "HPQ",
+      "rank": 20,
+      "total_qualifying": 269,
+      "momentum_pct": 82.95,
+      "above_sma": true,
+      "pct_above_sma": 45.12
     },
     {
       "ticker": "MPC",
-      "rank": 19,
+      "rank": 21,
       "total_qualifying": 269,
-      "momentum_pct": 77.3,
+      "momentum_pct": 79.74,
       "above_sma": true,
-      "pct_above_sma": 66.92
+      "pct_above_sma": 65.34
+    },
+    {
+      "ticker": "CRL",
+      "rank": 22,
+      "total_qualifying": 269,
+      "momentum_pct": 76.15,
+      "above_sma": true,
+      "pct_above_sma": 35.47
     },
     {
       "ticker": "ZBRA",
-      "rank": 22,
+      "rank": 26,
       "total_qualifying": 269,
-      "momentum_pct": 67.52,
+      "momentum_pct": 70.19,
       "above_sma": true,
-      "pct_above_sma": 32.1
+      "pct_above_sma": 33.5
     }
   ],
   "regime": {
     "risk_on": true,
-    "spy_price": 761.6,
-    "spy_sma200": 713.8,
-    "pct_from_sma": 6.7
+    "spy_price": 772.49,
+    "spy_sma200": 712.98,
+    "pct_from_sma": 8.35
   },
   "last_rebalance": {
     "date": "2026-09-14",
@@ -1554,21 +1578,23 @@
   "risk_summary": {
     "top_sector": {
       "sector": "Technology Hardware, Storage & Peripherals",
-      "value": 25917.9,
-      "pct": 29.51
+      "value": 26755.26,
+      "pct": 29.58
     },
     "at_risk_holdings": [
+      "MPC",
+      "CRL",
       "ZBRA"
     ],
     "dropped_out_holdings": [],
     "imminent_earnings": [],
     "pnl_concentration": {
-      "ticker": "MRNA",
-      "pnl": 600.42,
-      "pct_of_total_gain": 15.39
+      "ticker": "INTC",
+      "pnl": 1037.07,
+      "pct_of_total_gain": 15.91
     },
     "market_breadth_pct": 53.48,
-    "vix_level": 15.93
+    "vix_level": 15.05
   },
   "n_holdings": 20,
   "trades": [
